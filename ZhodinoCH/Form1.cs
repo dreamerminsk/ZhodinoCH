@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Windows.Forms;
 
@@ -31,6 +32,12 @@ namespace ZhodinoCH
             this.toolStripButton5.Checked = false;
             this.toolStripButton6.Checked = false;
             this.toolStripButton7.Checked = false;
+            this.downloads();
+        }
+
+        private void downloads()
+        {
+            WebClient client = new WebClient();
         }
 
         private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)

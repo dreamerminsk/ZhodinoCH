@@ -38,6 +38,14 @@ namespace ZhodinoCH
         private void downloads()
         {
             WebClient client = new WebClient();
+            client.DownloadStringCompleted += Client_DownloadStringCompleted;
+            client.DownloadStringAsync(new Uri("http://178.124.170.17:5984/ultrasound"));
+            
+        }
+
+        private void Client_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
+        {
+            MessageBox.Show(e.Result);
         }
 
         private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
@@ -55,6 +63,7 @@ namespace ZhodinoCH
             this.toolStripButton5.Checked = false;
             this.toolStripButton6.Checked = false;
             this.toolStripButton7.Checked = false;
+            this.downloads();
         }
 
         private void toolStripButton3_Click(object sender, EventArgs e)
@@ -67,6 +76,7 @@ namespace ZhodinoCH
             this.toolStripButton5.Checked = false;
             this.toolStripButton6.Checked = false;
             this.toolStripButton7.Checked = false;
+            this.downloads();
         }
 
         private void toolStripButton4_Click(object sender, EventArgs e)
@@ -79,6 +89,7 @@ namespace ZhodinoCH
             this.toolStripButton5.Checked = false;
             this.toolStripButton6.Checked = false;
             this.toolStripButton7.Checked = false;
+            this.downloads();
         }
 
         private void toolStripButton5_Click(object sender, EventArgs e)
@@ -91,6 +102,7 @@ namespace ZhodinoCH
             this.toolStripButton5.Checked = true;
             this.toolStripButton6.Checked = false;
             this.toolStripButton7.Checked = false;
+            this.downloads();
         }
 
         private void toolStripButton6_Click(object sender, EventArgs e)
@@ -103,6 +115,7 @@ namespace ZhodinoCH
             this.toolStripButton5.Checked = false;
             this.toolStripButton6.Checked = true;
             this.toolStripButton7.Checked = false;
+            this.downloads();
         }
 
         private void toolStripButton7_Click(object sender, EventArgs e)
@@ -115,6 +128,7 @@ namespace ZhodinoCH
             this.toolStripButton5.Checked = false;
             this.toolStripButton6.Checked = false;
             this.toolStripButton7.Checked = true;
+            this.downloads();
         }
     }
 }

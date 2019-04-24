@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Net;
 using System.Windows.Forms;
 
@@ -6,6 +7,10 @@ namespace ZhodinoCH
 {
     public partial class Form1 : Form
     {
+
+        private string currentDb = "";
+        private readonly BindingList<Record> source = new BindingList<Record>();
+
         public Form1()
         {
             InitializeComponent();
@@ -13,28 +18,32 @@ namespace ZhodinoCH
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            dataGridView1.DataSource = source;
+            toolStripButton1.PerformClick();
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            this.Text = toolStripButton1.Text;
-            this.toolStripButton1.Checked = true;
-            this.toolStripButton2.Checked = false;
-            this.toolStripButton3.Checked = false;
-            this.toolStripButton4.Checked = false;
-            this.toolStripButton5.Checked = false;
-            this.toolStripButton6.Checked = false;
-            this.toolStripButton7.Checked = false;
-            this.downloads();
+            Text = toolStripButton1.Text;
+            currentDb = "belgosstrakh";
+            toolStripButton1.Checked = true;
+            toolStripButton2.Checked = false;
+            toolStripButton3.Checked = false;
+            toolStripButton4.Checked = false;
+            toolStripButton5.Checked = false;
+            toolStripButton6.Checked = false;
+            toolStripButton7.Checked = false;
+            downloads();
         }
 
         private void downloads()
         {
-            WebClient client = new WebClient();
-           
-            client.DownloadStringCompleted += Client_DownloadStringCompleted;
-            client.DownloadStringAsync(new Uri("http://178.124.170.17:5984/pelvic/_all_docs"));
+            var recs = Repository.GetAll(currentDb);
+            source.Clear();
+            foreach (var rec in recs)
+            {
+                source.Add(rec);
+            }
             
         }
 
@@ -51,6 +60,7 @@ namespace ZhodinoCH
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
             this.Text = toolStripButton2.Text;
+            currentDb = "bca";
             this.toolStripButton1.Checked = false;
             this.toolStripButton2.Checked = true;
             this.toolStripButton3.Checked = false;
@@ -64,6 +74,7 @@ namespace ZhodinoCH
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
             this.Text = toolStripButton3.Text;
+            currentDb = "viscera";
             this.toolStripButton1.Checked = false;
             this.toolStripButton2.Checked = false;
             this.toolStripButton3.Checked = true;
@@ -77,6 +88,7 @@ namespace ZhodinoCH
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
             this.Text = toolStripButton4.Text;
+            currentDb = "pelvic";
             this.toolStripButton1.Checked = false;
             this.toolStripButton2.Checked = false;
             this.toolStripButton3.Checked = false;
@@ -90,6 +102,7 @@ namespace ZhodinoCH
         private void toolStripButton5_Click(object sender, EventArgs e)
         {
             this.Text = toolStripButton5.Text;
+            currentDb = "heart";
             this.toolStripButton1.Checked = false;
             this.toolStripButton2.Checked = false;
             this.toolStripButton3.Checked = false;
@@ -103,6 +116,7 @@ namespace ZhodinoCH
         private void toolStripButton6_Click(object sender, EventArgs e)
         {
             this.Text = toolStripButton6.Text;
+            currentDb = "fgds";
             this.toolStripButton1.Checked = false;
             this.toolStripButton2.Checked = false;
             this.toolStripButton3.Checked = false;
@@ -116,6 +130,7 @@ namespace ZhodinoCH
         private void toolStripButton7_Click(object sender, EventArgs e)
         {
             this.Text = toolStripButton7.Text;
+            currentDb = "thyroid";
             this.toolStripButton1.Checked = false;
             this.toolStripButton2.Checked = false;
             this.toolStripButton3.Checked = false;
@@ -138,12 +153,12 @@ namespace ZhodinoCH
 
         private void DataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
-
+            Console.WriteLine(e.RowIndex + ", " + e.ColumnIndex);
         }
 
         private void DataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-
+            Console.WriteLine(e.RowIndex + ", " + e.ColumnIndex);
         }
 
         private void DataGridView1_CellLeave(object sender, DataGridViewCellEventArgs e)
@@ -154,6 +169,7 @@ namespace ZhodinoCH
         private void DataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
             System.Console.WriteLine(e.RowIndex);
+
         }
     }
 }

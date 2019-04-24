@@ -30,13 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.dateHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.nameHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.telHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.noteHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
@@ -46,11 +43,11 @@
             this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.recordBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.telDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.commentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.recordBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -91,52 +88,10 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.dataGridView1);
-            this.splitContainer1.Panel1.Controls.Add(this.listView1);
             this.splitContainer1.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel1_Paint);
             this.splitContainer1.Size = new System.Drawing.Size(775, 317);
             this.splitContainer1.SplitterDistance = 247;
             this.splitContainer1.TabIndex = 0;
-            // 
-            // listView1
-            // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.dateHeader,
-            this.nameHeader,
-            this.telHeader,
-            this.noteHeader});
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.listView1.FullRowSelect = true;
-            this.listView1.GridLines = true;
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(0, 0);
-            this.listView1.Name = "listView1";
-            this.listView1.ShowItemToolTips = true;
-            this.listView1.Size = new System.Drawing.Size(775, 247);
-            this.listView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            // 
-            // dateHeader
-            // 
-            this.dateHeader.Text = "Дата";
-            this.dateHeader.Width = 80;
-            // 
-            // nameHeader
-            // 
-            this.nameHeader.Text = "ФИО";
-            this.nameHeader.Width = 200;
-            // 
-            // telHeader
-            // 
-            this.telHeader.Text = "Телефон";
-            this.telHeader.Width = 120;
-            // 
-            // noteHeader
-            // 
-            this.noteHeader.Text = "Примечание";
-            this.noteHeader.Width = 120;
             // 
             // toolStrip1
             // 
@@ -241,6 +196,15 @@
             // dataGridView1
             // 
             this.dataGridView1.AutoGenerateColumns = false;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.NullValue = null;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dateDataGridViewTextBoxColumn,
@@ -248,39 +212,55 @@
             this.telDataGridViewTextBoxColumn,
             this.commentDataGridViewTextBoxColumn});
             this.dataGridView1.DataSource = this.recordBindingSource;
-            this.dataGridView1.Location = new System.Drawing.Point(44, 54);
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.Format = "d";
+            dataGridViewCellStyle2.NullValue = null;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.GridColor = System.Drawing.SystemColors.Control;
+            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(457, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(775, 247);
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick);
-            // 
-            // recordBindingSource
-            // 
-            this.recordBindingSource.DataSource = typeof(ZhodinoCH.Record);
             // 
             // dateDataGridViewTextBoxColumn
             // 
             this.dateDataGridViewTextBoxColumn.DataPropertyName = "Date";
-            this.dateDataGridViewTextBoxColumn.HeaderText = "Date";
+            this.dateDataGridViewTextBoxColumn.HeaderText = "Дата";
             this.dateDataGridViewTextBoxColumn.Name = "dateDataGridViewTextBoxColumn";
+            this.dateDataGridViewTextBoxColumn.ToolTipText = "Дата";
             // 
             // nameDataGridViewTextBoxColumn
             // 
             this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "ФИО";
             this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            this.nameDataGridViewTextBoxColumn.ToolTipText = "ФИО пациента";
             // 
             // telDataGridViewTextBoxColumn
             // 
             this.telDataGridViewTextBoxColumn.DataPropertyName = "Tel";
-            this.telDataGridViewTextBoxColumn.HeaderText = "Tel";
+            this.telDataGridViewTextBoxColumn.HeaderText = "Телефон";
             this.telDataGridViewTextBoxColumn.Name = "telDataGridViewTextBoxColumn";
+            this.telDataGridViewTextBoxColumn.ToolTipText = "Телефон";
             // 
             // commentDataGridViewTextBoxColumn
             // 
             this.commentDataGridViewTextBoxColumn.DataPropertyName = "Comment";
-            this.commentDataGridViewTextBoxColumn.HeaderText = "Comment";
+            this.commentDataGridViewTextBoxColumn.HeaderText = "Примечание";
             this.commentDataGridViewTextBoxColumn.Name = "commentDataGridViewTextBoxColumn";
+            this.commentDataGridViewTextBoxColumn.ToolTipText = "Примечание";
+            // 
+            // recordBindingSource
+            // 
+            this.recordBindingSource.DataSource = typeof(ZhodinoCH.Record);
             // 
             // Form1
             // 
@@ -319,17 +299,12 @@
         private System.Windows.Forms.ToolStripButton toolStripButton6;
         private System.Windows.Forms.ToolStripButton toolStripButton7;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.ColumnHeader dateHeader;
-        private System.Windows.Forms.ColumnHeader nameHeader;
-        private System.Windows.Forms.ColumnHeader telHeader;
-        private System.Windows.Forms.ColumnHeader noteHeader;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.BindingSource recordBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn dateDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn telDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn commentDataGridViewTextBoxColumn;
-        private System.Windows.Forms.BindingSource recordBindingSource;
     }
 }
 

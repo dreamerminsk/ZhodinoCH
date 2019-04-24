@@ -32,6 +32,7 @@ namespace ZhodinoCH
         private void downloads()
         {
             WebClient client = new WebClient();
+           
             client.DownloadStringCompleted += Client_DownloadStringCompleted;
             client.DownloadStringAsync(new Uri("http://178.124.170.17:5984/pelvic/_all_docs"));
             
@@ -152,7 +153,7 @@ namespace ZhodinoCH
 
         private void DataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-
+            System.Console.WriteLine(e.RowIndex);
         }
     }
 }

@@ -16,6 +16,7 @@ namespace ZhodinoCH
 
         public Record()
         {
+            ID = Repository.GetID();
             Date = DateTime.Now;
         }
     }

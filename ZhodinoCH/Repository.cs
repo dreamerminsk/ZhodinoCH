@@ -18,6 +18,23 @@ namespace ZhodinoCH
             return (string)uuid;
         }
 
+        public static Record Get(string db, string id)
+        {
+            var recs = new List<Record>();
+            string response = DownloadString("http://178.124.170.17:5984/" + db + "/" + id);
+            Console.WriteLine(response);
+            JObject record = JObject.Parse((response));
+            var rec = new Record(
+                (string)record["_id"],
+                (string)record["_rev"],
+                (string)record["date"],
+                (string)record["patient"],
+                (string)record["tel"],
+                (string)record["comment"]
+                );
+            return rec;
+        }
+
         public static List<Record> GetAll(string db)
         {
             var recs = new List<Record>();
@@ -51,10 +68,28 @@ namespace ZhodinoCH
             }
         }
 
+        public static void Insert(string db, Record rec)
+        {
+            string str = "{ \"patient\": \"" + rec.Name + "\", " +
+                "\"date\": \"" + rec.Date.ToShortDateString() + "\", " +
+                "\"tel\": \"" + rec.Tel + "\", " +
+                "\"comment\": \"" + rec.Comment + "\" }";
+            var encoding = Encoding.GetEncoding("utf-8");
+            byte[] arr = encoding.GetBytes(str);
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create("http://178.124.170.17:5984/" + db + "/" + rec.ID);
+            request.Method = "PUT";
+            request.ContentType = "text/json";
+            request.ContentLength = arr.Length;
+            request.KeepAlive = true;
+            var dataStream = request.GetRequestStream();
+            dataStream.Write(arr, 0, arr.Length);
+            dataStream.Close();
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            string returnString = response.StatusCode.ToString();
+        }
+
         public static void Update(string db, Record rec)
         {
-            WebClient client = new WebClient();
-            client.DownloadString(new Uri("http://178.124.170.17:5984/" + db + "/" + rec.ID + "/"));
             string str = "{ \"patient\": \"" + rec.Name + "\", " +
                 "\"date\": \"" + rec.Date.ToShortDateString() + "\", " +
                 "\"tel\": \"" + rec.Tel + "\", " +

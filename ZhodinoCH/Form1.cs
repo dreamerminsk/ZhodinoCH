@@ -153,15 +153,24 @@ namespace ZhodinoCH
 
         private void DataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
-            Console.WriteLine(e.RowIndex + ", " + e.ColumnIndex);
+            
         }
 
         private void DataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            string value = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-            Console.WriteLine(e.RowIndex + ", " + e.ColumnIndex + " " + value);
-            Console.WriteLine(source[e.RowIndex].Name);
-            Repository.Update(currentDb, source[e.RowIndex]);
+            var item = source[e.RowIndex];
+            if (item.Rev == "")
+            {
+                Repository.Insert(currentDb, item);
+            }
+            else
+            {
+                Repository.Update(currentDb, item);
+            }
+            var newItem = Repository.Get(currentDb, item.ID);
+            source.RemoveAt(e.RowIndex);
+            source.Insert(e.RowIndex, newItem);
+            
         }
 
         private void DataGridView1_CellLeave(object sender, DataGridViewCellEventArgs e)

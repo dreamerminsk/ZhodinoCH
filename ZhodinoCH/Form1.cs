@@ -39,7 +39,7 @@ namespace ZhodinoCH
         {
             WebClient client = new WebClient();
             client.DownloadStringCompleted += Client_DownloadStringCompleted;
-            client.DownloadStringAsync(new Uri("http://178.124.170.17:5984/heart"));
+            client.DownloadStringAsync(new Uri("http://178.124.170.17:5984/ultrasound/_all_docs"));
             
         }
 

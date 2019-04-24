@@ -130,5 +130,10 @@ namespace ZhodinoCH
             this.toolStripButton7.Checked = true;
             this.downloads();
         }
+
+        private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

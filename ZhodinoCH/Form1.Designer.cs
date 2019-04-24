@@ -98,6 +98,7 @@
             this.listView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
+            this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(0, 0);
             this.listView1.Name = "listView1";
             this.listView1.ShowItemToolTips = true;
@@ -140,7 +141,7 @@
             this.toolStripButton7});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(615, 28);
+            this.toolStrip1.Size = new System.Drawing.Size(584, 28);
             this.toolStrip1.TabIndex = 0;
             // 
             // toolStripButton1

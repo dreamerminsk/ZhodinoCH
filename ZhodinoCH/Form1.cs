@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Windows.Forms;
 
 namespace ZhodinoCH
@@ -39,7 +33,7 @@ namespace ZhodinoCH
         {
             WebClient client = new WebClient();
             client.DownloadStringCompleted += Client_DownloadStringCompleted;
-            client.DownloadStringAsync(new Uri("http://178.124.170.17:5984/ultrasound/_all_docs"));
+            client.DownloadStringAsync(new Uri("http://178.124.170.17:5984/pelvic/_all_docs"));
             
         }
 
@@ -132,6 +126,31 @@ namespace ZhodinoCH
         }
 
         private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void DataGridView1_RowLeave(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void DataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+
+        }
+
+        private void DataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void DataGridView1_CellLeave(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void DataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
 
         }

@@ -7,22 +7,18 @@ namespace ZhodinoCH
 {
     public class Record
     {
-
-        private DateTime date;
-        private string name;
-        private string tel;
-        private string comment;
-
-        public DateTime Date { get => date; set => date = value; }
-        public string Name { get => name; set => name = value; }
-        public string Tel { get => tel; set => tel = value; }
-        public string Comment { get => comment; set => comment = value; }
+        public string ID { get; set; }
+        public DateTime Date { get; set; }
+        public string Name { get; set; }
+        public string Tel { get; set; }
+        public string Comment { get; set; }
+        
 
         public Record()
         {
-            date = DateTime.Now;
+            Date = DateTime.Now;
         }
     }
 
-    
+
 }

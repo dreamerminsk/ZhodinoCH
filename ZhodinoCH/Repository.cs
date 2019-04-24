@@ -41,5 +41,28 @@ namespace ZhodinoCH
             }
             return recs;
         }
+
+        public static void Update(string db, Record rec)
+        {
+            WebClient client = new WebClient();
+            client.DownloadString(new Uri("http://178.124.170.17:5984/" + db + "/" + rec.ID + "/"));
+            string str = "{ \"patient\": \"" + rec.Name + "\", " +
+                "\"date\": \"" + rec.Date.ToShortDateString() + "\", " +
+                "\"tel\": \"" + rec.Tel + "\", " +
+                "\"comment\": \"" + rec.Comment + "\", " +
+                "\"_rev\": \"" + rec.Rev + "\" }";
+            var encoding = Encoding.GetEncoding("utf-8");
+            byte[] arr = encoding.GetBytes(str);
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create("http://178.124.170.17:5984/" + db + "/" + rec.ID + "/");
+            request.Method = "PUT";
+            request.ContentType = "text/json";
+            request.ContentLength = arr.Length;
+            request.KeepAlive = true;
+            var dataStream = request.GetRequestStream();
+            dataStream.Write(arr, 0, arr.Length);
+            dataStream.Close();
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            string returnString = response.StatusCode.ToString();
+        }
     }
 }

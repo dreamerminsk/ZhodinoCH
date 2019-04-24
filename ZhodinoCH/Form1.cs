@@ -158,7 +158,10 @@ namespace ZhodinoCH
 
         private void DataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            Console.WriteLine(e.RowIndex + ", " + e.ColumnIndex);
+            string value = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+            Console.WriteLine(e.RowIndex + ", " + e.ColumnIndex + " " + value);
+            Console.WriteLine(source[e.RowIndex].Name);
+            Repository.Update(currentDb, source[e.RowIndex]);
         }
 
         private void DataGridView1_CellLeave(object sender, DataGridViewCellEventArgs e)

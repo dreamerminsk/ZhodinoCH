@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Net;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ZhodinoCH
@@ -158,6 +159,7 @@ namespace ZhodinoCH
 
         private void DataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            Task<string> t;
             var item = source[e.RowIndex];
             if (item.Rev == "")
             {
@@ -181,6 +183,11 @@ namespace ZhodinoCH
         private void DataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
             System.Console.WriteLine(e.RowIndex);
+
+        }
+
+        private void SplitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
+        {
 
         }
     }

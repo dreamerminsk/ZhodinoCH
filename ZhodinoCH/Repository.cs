@@ -80,12 +80,13 @@ namespace ZhodinoCH
             request.Method = "PUT";
             request.ContentType = "text/json";
             request.ContentLength = arr.Length;
-            request.KeepAlive = true;
+            request.KeepAlive = false;
             var dataStream = request.GetRequestStream();
             dataStream.Write(arr, 0, arr.Length);
             dataStream.Close();
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             string returnString = response.StatusCode.ToString();
+            response.Close();
         }
 
         public static void Update(string db, Record rec)
@@ -101,12 +102,13 @@ namespace ZhodinoCH
             request.Method = "PUT";
             request.ContentType = "text/json";
             request.ContentLength = arr.Length;
-            request.KeepAlive = true;
+            request.KeepAlive = false;
             var dataStream = request.GetRequestStream();
             dataStream.Write(arr, 0, arr.Length);
             dataStream.Close();
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             string returnString = response.StatusCode.ToString();
+            response.Close();
         }
     }
 }

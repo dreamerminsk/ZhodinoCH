@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Text;
 
@@ -22,9 +21,9 @@ namespace ZhodinoCH
         public static List<Record> GetAll(string db)
         {
             var recs = new List<Record>();
-            WebClient client = new WebClient();
-            string response = client.DownloadString(new Uri("http://178.124.170.17:5984/" + db + "/_all_docs?include_docs=true"));
-            JObject records = JObject.Parse(response);
+            string response = DownloadString("http://178.124.170.17:5984/" + db + "/_all_docs?include_docs=true");
+            Console.WriteLine(response);
+            JObject records = JObject.Parse((response));
             JArray rows = (JArray)records["rows"];
             foreach (var row in rows)
             {
@@ -40,6 +39,16 @@ namespace ZhodinoCH
                 recs.Add(rec);
             }
             return recs;
+        }
+
+        private static string DownloadString(string uri)
+        {
+            using (WebClient webClient = new WebClient())
+            {
+                webClient.Encoding = Encoding.UTF8;
+                string response = webClient.DownloadString(new Uri(uri));
+                return response;
+            }
         }
 
         public static void Update(string db, Record rec)

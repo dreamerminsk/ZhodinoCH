@@ -50,11 +50,6 @@ namespace ZhodinoCH
             
         }
 
-        private void Client_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
-        {
-            MessageBox.Show(e.Result);
-        }
-
         private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
         {
 

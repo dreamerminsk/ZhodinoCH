@@ -22,7 +22,6 @@ namespace ZhodinoCH
         {
             var recs = new List<Record>();
             string response = DownloadString("http://178.124.170.17:5984/" + db + "/" + id);
-            Console.WriteLine(response);
             JObject record = JObject.Parse((response));
             var rec = new Record(
                 (string)record["_id"],
@@ -39,7 +38,6 @@ namespace ZhodinoCH
         {
             var recs = new List<Record>();
             string response = DownloadString("http://178.124.170.17:5984/" + db + "/_all_docs?include_docs=true");
-            Console.WriteLine(response);
             JObject records = JObject.Parse((response));
             JArray rows = (JArray)records["rows"];
             foreach (var row in rows)

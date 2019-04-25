@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -41,12 +42,18 @@ namespace ZhodinoCH
 
         private void downloads()
         {
-            var recs = Repository.GetAll(currentDb);
-            source.Clear();
-            foreach (var rec in recs)
-            {
-                source.Add(rec);
-            }
+            var uiContext = TaskScheduler.FromCurrentSynchronizationContext();
+            var getAllTask = Task.Factory.StartNew(() => {
+                return Repository.GetAll(currentDb);
+            });
+            getAllTask.ContinueWith((t) => {
+                source.Clear();
+                var recs = t.Result;
+                foreach (var rec in recs)
+                {
+                    source.Add(rec);
+                }
+            }, CancellationToken.None, TaskCreationOptions.None, uiContext);           
             
         }
 
@@ -168,8 +175,6 @@ namespace ZhodinoCH
             }
             var newItem = Repository.Get(currentDb, item.ID);
             item.Rev = newItem.Rev;
-            //source.RemoveAt(e.RowIndex);
-            //source.Insert(e.RowIndex, newItem);
 
         }
 

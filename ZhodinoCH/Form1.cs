@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Net;
@@ -43,17 +44,17 @@ namespace ZhodinoCH
         private void downloads()
         {
             var uiContext = TaskScheduler.FromCurrentSynchronizationContext();
-            var getAllTask = Task.Factory.StartNew(() => {
+            Task<List<Record>> getAllTask = Task<List<Record>>.Factory.StartNew(() => {
                 return Repository.GetAll(currentDb);
             });
-            getAllTask.ContinueWith((t) => {
+            getAllTask.ContinueWith((Task<List<Record>>  t) => {
                 source.Clear();
                 var recs = t.Result;
                 foreach (var rec in recs)
                 {
                     source.Add(rec);
                 }
-            }, CancellationToken.None, TaskCreationOptions.None, uiContext);           
+            }, CancellationToken.None, TaskContinuationOptions.None, uiContext);           
             
         }
 

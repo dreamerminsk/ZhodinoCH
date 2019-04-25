@@ -167,9 +167,10 @@ namespace ZhodinoCH
                 Repository.Update(currentDb, item);
             }
             var newItem = Repository.Get(currentDb, item.ID);
-            source.RemoveAt(e.RowIndex);
-            source.Insert(e.RowIndex, newItem);
-            
+            item.Rev = newItem.Rev;
+            //source.RemoveAt(e.RowIndex);
+            //source.Insert(e.RowIndex, newItem);
+
         }
 
         private void DataGridView1_CellLeave(object sender, DataGridViewCellEventArgs e)

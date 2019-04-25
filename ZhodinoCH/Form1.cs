@@ -189,33 +189,7 @@ namespace ZhodinoCH
         }
 
         private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {            
-            //if (oDateTimePicker != null) { oDateTimePicker.Visible = false; }
-            //if (e.ColumnIndex == 1)
-            //{
-            //    oDateTimePicker = new DateTimePicker();
-            //    dataGridView1.Controls.Add(oDateTimePicker);
-            //    oDateTimePicker.Format = DateTimePickerFormat.Short;
-            //    Rectangle oRectangle = dataGridView1.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, true); 
-            //    oDateTimePicker.Size = new Size(oRectangle.Width, oRectangle.Height);
-            //    oDateTimePicker.Location = new Point(oRectangle.X, oRectangle.Y);
-            //    oDateTimePicker.CloseUp += new EventHandler(oDateTimePicker_CloseUp); 
-            //    oDateTimePicker.TextChanged += new EventHandler(dateTimePicker_OnTextChange);
-            //    oDateTimePicker.Value = DateTime.Parse(dataGridView1.CurrentCell.Value.ToString());
-            //    oDateTimePicker.Visible = true;
-                
-            //}            
-        }
-
-        private void dateTimePicker_OnTextChange(object sender, EventArgs e)
-        {             
-            dataGridView1.CurrentCell.Value = oDateTimePicker.Text.ToString();
-           
-        }
-
-        void oDateTimePicker_CloseUp(object sender, EventArgs e)
-        {  
-            oDateTimePicker.Visible = false;
+        {           
         }
     }
 }

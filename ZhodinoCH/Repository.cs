@@ -68,15 +68,16 @@ namespace ZhodinoCH
 
         public static void Insert(string db, Record rec)
         {
-            string str = "{ \"patient\": \"" + rec.Name + "\", " +
-                "\"date\": \"" + rec.Date.ToShortDateString() + "\", " +
-                "\"tel\": \"" + rec.Tel + "\", " +
-                "\"comment\": \"" + rec.Comment + "\" }";
+            JObject jsonobj = new JObject();
+            jsonobj.Add("patient", rec.Name);
+            jsonobj.Add("date", rec.Date.ToShortDateString());
+            jsonobj.Add("tel", rec.Tel);
+            jsonobj.Add("comment", rec.Comment);
             var encoding = Encoding.GetEncoding("utf-8");
-            byte[] arr = encoding.GetBytes(str);
+            byte[] arr = encoding.GetBytes(jsonobj.ToString());
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create("http://178.124.170.17:5984/" + db + "/" + rec.ID);
             request.Method = "PUT";
-            request.ContentType = "text/json";
+            request.ContentType = "application/json";
             request.ContentLength = arr.Length;
             request.KeepAlive = false;
             var dataStream = request.GetRequestStream();
@@ -89,16 +90,17 @@ namespace ZhodinoCH
 
         public static void Update(string db, Record rec)
         {
-            string str = "{ \"patient\": \"" + rec.Name + "\", " +
-                "\"date\": \"" + rec.Date.ToShortDateString() + "\", " +
-                "\"tel\": \"" + rec.Tel + "\", " +
-                "\"comment\": \"" + rec.Comment + "\", " +
-                "\"_rev\": \"" + rec.Rev + "\" }";
+            JObject jsonobj = new JObject();
+            jsonobj.Add("patient", rec.Name);
+            jsonobj.Add("date", rec.Date.ToShortDateString());
+            jsonobj.Add("tel", rec.Tel);
+            jsonobj.Add("comment", rec.Comment);
+            jsonobj.Add("_rev", rec.Rev);
             var encoding = Encoding.GetEncoding("utf-8");
-            byte[] arr = encoding.GetBytes(str);
+            byte[] arr = encoding.GetBytes(jsonobj.ToString());
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create("http://178.124.170.17:5984/" + db + "/" + rec.ID + "/");
             request.Method = "PUT";
-            request.ContentType = "text/json";
+            request.ContentType = "application/json";
             request.ContentLength = arr.Length;
             request.KeepAlive = false;
             var dataStream = request.GetRequestStream();

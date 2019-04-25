@@ -41,20 +41,14 @@ namespace ZhodinoCH
             downloads();
         }
 
-        private void downloads()
+        private async void downloads()
         {
-            var uiContext = TaskScheduler.FromCurrentSynchronizationContext();
-            Task<List<Record>> getAllTask = Task<List<Record>>.Factory.StartNew(() => {
-                return Repository.GetAll(currentDb);
-            });
-            getAllTask.ContinueWith((Task<List<Record>>  t) => {
-                source.Clear();
-                var recs = t.Result;
-                foreach (var rec in recs)
-                {
-                    source.Add(rec);
-                }
-            }, CancellationToken.None, TaskContinuationOptions.None, uiContext);           
+            var recs = await Repository.GetAllAsync(currentDb);
+            source.Clear();
+            foreach (var rec in recs)
+            {
+                source.Add(rec);
+            }         
             
         }
 
@@ -164,7 +158,6 @@ namespace ZhodinoCH
 
         private void DataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            Task<string> t;
             var item = source[e.RowIndex];
             if (item.Rev == "")
             {

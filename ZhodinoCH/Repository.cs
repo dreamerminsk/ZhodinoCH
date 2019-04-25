@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ZhodinoCH
 {
@@ -56,6 +58,28 @@ namespace ZhodinoCH
             return recs;
         }
 
+        public static async Task<List<Record>> GetAllAsync(string db)
+        {
+            var recs = new List<Record>();
+            string response = await DownloadStringAsync("http://178.124.170.17:5984/" + db + "/_all_docs?include_docs=true");
+            JObject records = JObject.Parse((response));
+            JArray rows = (JArray)records["rows"];
+            foreach (var row in rows)
+            {
+                var doc = row["doc"];
+                var rec = new Record(
+                    (string)doc["_id"],
+                    (string)doc["_rev"],
+                    (string)doc["date"],
+                    (string)doc["patient"],
+                    (string)doc["tel"],
+                    (string)doc["comment"]
+                    );
+                recs.Add(rec);
+            }
+            return recs;
+        }
+
         private static string DownloadString(string uri)
         {
             using (WebClient webClient = new WebClient())
@@ -63,6 +87,15 @@ namespace ZhodinoCH
                 webClient.Encoding = Encoding.UTF8;
                 string response = webClient.DownloadString(new Uri(uri));
                 return response;
+            }
+        }
+
+        private static Task<string> DownloadStringAsync(string uri)
+        {
+            using (WebClient webClient = new WebClient())
+            {
+                webClient.Encoding = Encoding.UTF8;
+                return Task<string>.Factory.StartNew(() => { return webClient.DownloadString(new Uri(uri)); });
             }
         }
 

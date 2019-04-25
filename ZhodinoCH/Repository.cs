@@ -73,9 +73,25 @@ namespace ZhodinoCH
             jsonobj.Add("date", rec.Date.ToShortDateString());
             jsonobj.Add("tel", rec.Tel);
             jsonobj.Add("comment", rec.Comment);
+            putReq2("http://178.124.170.17:5984/" + db + "/" + rec.ID + "/", jsonobj);
+        }
+
+        public static void Update(string db, Record rec)
+        {
+            JObject jsonobj = new JObject();
+            jsonobj.Add("patient", rec.Name);
+            jsonobj.Add("date", rec.Date.ToShortDateString());
+            jsonobj.Add("tel", rec.Tel);
+            jsonobj.Add("comment", rec.Comment);
+            jsonobj.Add("_rev", rec.Rev);
+            putReq2("http://178.124.170.17:5984/" + db + "/" + rec.ID + "/", jsonobj);
+        }
+
+        private static void putReq(string db, Record rec, JObject jsonobj)
+        {
             var encoding = Encoding.GetEncoding("utf-8");
             byte[] arr = encoding.GetBytes(jsonobj.ToString());
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create("http://178.124.170.17:5984/" + db + "/" + rec.ID);
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create("http://178.124.170.17:5984/" + db + "/" + rec.ID + "/");
             request.Method = "PUT";
             request.ContentType = "application/json";
             request.ContentLength = arr.Length;
@@ -88,17 +104,11 @@ namespace ZhodinoCH
             response.Close();
         }
 
-        public static void Update(string db, Record rec)
+        private static void putReq2(string url, JObject jsonobj)
         {
-            JObject jsonobj = new JObject();
-            jsonobj.Add("patient", rec.Name);
-            jsonobj.Add("date", rec.Date.ToShortDateString());
-            jsonobj.Add("tel", rec.Tel);
-            jsonobj.Add("comment", rec.Comment);
-            jsonobj.Add("_rev", rec.Rev);
             var encoding = Encoding.GetEncoding("utf-8");
             byte[] arr = encoding.GetBytes(jsonobj.ToString());
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create("http://178.124.170.17:5984/" + db + "/" + rec.ID + "/");
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
             request.Method = "PUT";
             request.ContentType = "application/json";
             request.ContentLength = arr.Length;

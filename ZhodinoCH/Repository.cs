@@ -106,7 +106,7 @@ namespace ZhodinoCH
             jsonobj.Add("date", rec.Date.ToShortDateString());
             jsonobj.Add("tel", rec.Tel);
             jsonobj.Add("comment", rec.Comment);
-            putReq2("http://178.124.170.17:5984/" + db + "/" + rec.ID + "/", jsonobj);
+            putReq("http://178.124.170.17:5984/" + db + "/" + rec.ID + "/", jsonobj);
         }
 
         public static void Update(string db, Record rec)
@@ -117,27 +117,10 @@ namespace ZhodinoCH
             jsonobj.Add("tel", rec.Tel);
             jsonobj.Add("comment", rec.Comment);
             jsonobj.Add("_rev", rec.Rev);
-            putReq2("http://178.124.170.17:5984/" + db + "/" + rec.ID + "/", jsonobj);
+            putReq("http://178.124.170.17:5984/" + db + "/" + rec.ID + "/", jsonobj);
         }
 
-        private static void putReq(string db, Record rec, JObject jsonobj)
-        {
-            var encoding = Encoding.GetEncoding("utf-8");
-            byte[] arr = encoding.GetBytes(jsonobj.ToString());
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create("http://178.124.170.17:5984/" + db + "/" + rec.ID + "/");
-            request.Method = "PUT";
-            request.ContentType = "application/json";
-            request.ContentLength = arr.Length;
-            request.KeepAlive = false;
-            var dataStream = request.GetRequestStream();
-            dataStream.Write(arr, 0, arr.Length);
-            dataStream.Close();
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            string returnString = response.StatusCode.ToString();
-            response.Close();
-        }
-
-        private static void putReq2(string url, JObject jsonobj)
+        private static void putReq(string url, JObject jsonobj)
         {
             var encoding = Encoding.GetEncoding("utf-8");
             byte[] arr = encoding.GetBytes(jsonobj.ToString());

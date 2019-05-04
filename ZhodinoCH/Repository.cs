@@ -11,6 +11,23 @@ namespace ZhodinoCH
     class Repository
     {
 
+
+
+        public static bool TestLocalHost()
+        {
+            try
+            {
+                WebClient client = new WebClient();
+                var host = Properties.Settings.Default.LocalHost;
+                string response = client.DownloadString(new Uri(host + "/_uuids"));
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public static string GetID()
         {
             WebClient client = new WebClient();

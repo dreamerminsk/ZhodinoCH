@@ -22,7 +22,7 @@ namespace ZhodinoCH
             System.Threading.Thread.CurrentThread.CurrentCulture = culture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
             dataGridView1.DataSource = source;
-            toolStripLabel1.Text = "Аноним " + NetUtils.LocalIPAddress();
+            toolStripLabel1.Text = "[" + NetUtils.LocalIPAddress() + "]";
             toolStripButton1.PerformClick();
         }
 

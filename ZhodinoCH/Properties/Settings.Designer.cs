@@ -43,7 +43,7 @@ namespace ZhodinoCH.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Anonym")]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.0.105")]
         public string User {
             get {
                 return ((string)(this["User"]));

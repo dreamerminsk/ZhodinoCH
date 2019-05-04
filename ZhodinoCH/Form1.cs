@@ -195,5 +195,10 @@ namespace ZhodinoCH
         private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {           
         }
+
+        private void ToolStripTextBox1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

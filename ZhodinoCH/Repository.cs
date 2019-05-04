@@ -11,7 +11,7 @@ namespace ZhodinoCH
     class Repository
     {
 
-
+        private static string CURRENT_HOST = Properties.Settings.Default.RemoteHost;
 
         public static bool TestLocalHost()
         {
@@ -31,7 +31,7 @@ namespace ZhodinoCH
         public static string GetID()
         {
             WebClient client = new WebClient();
-            string response = client.DownloadString(new Uri("http://178.124.170.17:5984/_uuids"));
+            string response = client.DownloadString(new Uri(CURRENT_HOST + "/_uuids"));
             JObject uuids = JObject.Parse(response);
             JToken uuid = uuids["uuids"][0];
             return (string)uuid;
@@ -40,7 +40,7 @@ namespace ZhodinoCH
         public static Record Get(string db, string id)
         {
             var recs = new List<Record>();
-            string response = DownloadString("http://178.124.170.17:5984/" + db + "/" + id);
+            string response = DownloadString(CURRENT_HOST + "/" + db + "/" + id);
             JObject record = JObject.Parse((response));
             var rec = new Record(
                 (string)record["_id"],
@@ -56,7 +56,7 @@ namespace ZhodinoCH
         public static List<Record> GetAll(string db)
         {
             var recs = new List<Record>();
-            string response = DownloadString("http://178.124.170.17:5984/" + db + "/_all_docs?include_docs=true");
+            string response = DownloadString(CURRENT_HOST + "/" + db + "/_all_docs?include_docs=true");
             JObject records = JObject.Parse((response));
             JArray rows = (JArray)records["rows"];
             foreach (var row in rows)
@@ -78,7 +78,7 @@ namespace ZhodinoCH
         public static async Task<List<Record>> GetAllAsync(string db)
         {
             var recs = new List<Record>();
-            string response = await DownloadStringAsync("http://178.124.170.17:5984/" + db + "/_all_docs?include_docs=true");
+            string response = await DownloadStringAsync(CURRENT_HOST + "/" + db + "/_all_docs?include_docs=true");
             JObject records = JObject.Parse((response));
             JArray rows = (JArray)records["rows"];
             foreach (var row in rows)
@@ -123,7 +123,7 @@ namespace ZhodinoCH
             jsonobj.Add("date", rec.Date.ToShortDateString());
             jsonobj.Add("tel", rec.Tel);
             jsonobj.Add("comment", rec.Comment);
-            putReq("http://178.124.170.17:5984/" + db + "/" + rec.ID + "/", jsonobj);
+            putReq(CURRENT_HOST + "/" + db + "/" + rec.ID + "/", jsonobj);
         }
 
         public static void Update(string db, Record rec)
@@ -134,7 +134,7 @@ namespace ZhodinoCH
             jsonobj.Add("tel", rec.Tel);
             jsonobj.Add("comment", rec.Comment);
             jsonobj.Add("_rev", rec.Rev);
-            putReq("http://178.124.170.17:5984/" + db + "/" + rec.ID + "/", jsonobj);
+            putReq(CURRENT_HOST + "/" + db + "/" + rec.ID + "/", jsonobj);
         }
 
         private static void putReq(string url, JObject jsonobj)

@@ -40,5 +40,14 @@ namespace ZhodinoCH.Properties {
                 return ((string)(this["RemoteHost"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Anonym")]
+        public string User {
+            get {
+                return ((string)(this["User"]));
+            }
+        }
     }
 }

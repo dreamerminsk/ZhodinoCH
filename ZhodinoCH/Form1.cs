@@ -207,6 +207,8 @@ namespace ZhodinoCH
             toolStripLabel1.Visible = true;
             toolStripTextBox1.Visible = false;
             toolStripLabel1.Text = toolStripTextBox1.Text;
+            Properties.Settings.Default["User"] = toolStripTextBox1.Text;
+            Properties.Settings.Default.Save();
         }
 
         private void ToolStripLabel1_DoubleClick(object sender, EventArgs e)
@@ -229,6 +231,8 @@ namespace ZhodinoCH
                     toolStripLabel1.Visible = true;
                     toolStripTextBox1.Visible = false;
                     toolStripLabel1.Text = toolStripTextBox1.Text;
+                    Properties.Settings.Default["User"] = toolStripTextBox1.Text;
+                    Properties.Settings.Default.Save();
                     break;
             }
         }

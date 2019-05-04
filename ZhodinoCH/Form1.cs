@@ -22,6 +22,7 @@ namespace ZhodinoCH
             System.Threading.Thread.CurrentThread.CurrentCulture = culture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
             dataGridView1.DataSource = source;
+            toolStripLabel1.Text = "Аноним " + NetUtils.LocalIPAddress();
             toolStripButton1.PerformClick();
         }
 
@@ -198,7 +199,38 @@ namespace ZhodinoCH
 
         private void ToolStripTextBox1_Click(object sender, EventArgs e)
         {
+            toolStripTextBox1.Enabled = true;
+        }
 
+        private void ToolStripTextBox1_Leave(object sender, EventArgs e)
+        {
+            toolStripLabel1.Visible = true;
+            toolStripTextBox1.Visible = false;
+            toolStripLabel1.Text = toolStripTextBox1.Text;
+        }
+
+        private void ToolStripLabel1_DoubleClick(object sender, EventArgs e)
+        {
+        }
+
+        private void ToolStripLabel1_Click(object sender, EventArgs e)
+        {
+            toolStripLabel1.Visible = false;
+            toolStripTextBox1.Width = toolStripLabel1.Width;
+            toolStripTextBox1.Text = toolStripLabel1.Text;
+            toolStripTextBox1.Visible = true;
+        }
+
+        private void ToolStripTextBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            switch (e.KeyChar)
+            {
+                case '\r':
+                    toolStripLabel1.Visible = true;
+                    toolStripTextBox1.Visible = false;
+                    toolStripLabel1.Text = toolStripTextBox1.Text;
+                    break;
+            }
         }
     }
 }

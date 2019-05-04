@@ -46,6 +46,7 @@
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.idColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dateDataGridViewTextBoxColumn = new ZhodinoCH.CalendarColumn();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -161,10 +162,11 @@
             this.toolStripButton6,
             this.toolStripButton7,
             this.toolStripSeparator1,
-            this.toolStripTextBox1});
+            this.toolStripTextBox1,
+            this.toolStripLabel1});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(723, 29);
+            this.toolStrip1.Size = new System.Drawing.Size(792, 29);
             this.toolStrip1.TabIndex = 0;
             // 
             // toolStripButton1
@@ -258,14 +260,27 @@
             // 
             // toolStripTextBox1
             // 
+            this.toolStripTextBox1.AcceptsReturn = true;
+            this.toolStripTextBox1.AutoSize = false;
             this.toolStripTextBox1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.toolStripTextBox1.ForeColor = System.Drawing.SystemColors.Highlight;
             this.toolStripTextBox1.Name = "toolStripTextBox1";
-            this.toolStripTextBox1.ReadOnly = true;
             this.toolStripTextBox1.Size = new System.Drawing.Size(100, 29);
             this.toolStripTextBox1.Text = "Аноним";
             this.toolStripTextBox1.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.toolStripTextBox1.Visible = false;
+            this.toolStripTextBox1.Leave += new System.EventHandler(this.ToolStripTextBox1_Leave);
+            this.toolStripTextBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ToolStripTextBox1_KeyPress);
             this.toolStripTextBox1.Click += new System.EventHandler(this.ToolStripTextBox1_Click);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(69, 26);
+            this.toolStripLabel1.Text = "Аноним";
+            this.toolStripLabel1.Click += new System.EventHandler(this.ToolStripLabel1_Click);
+            this.toolStripLabel1.DoubleClick += new System.EventHandler(this.ToolStripLabel1_DoubleClick);
             // 
             // idColumn
             // 
@@ -362,6 +377,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn commentDataGridViewTextBoxColumn;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
     }
 }
 

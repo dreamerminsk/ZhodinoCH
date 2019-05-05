@@ -164,17 +164,20 @@ namespace ZhodinoCH
 
         private void DataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            var item = source[e.RowIndex];
-            if (item.Rev == "")
+            if (e.RowIndex >= source.Count)
             {
-                Repository.Insert(currentDb, item);
+                Record item = source[e.RowIndex];
+                if (item.Rev == "")
+                {
+                    Repository.Insert(currentDb, item);
+                }
+                else
+                {
+                    Repository.Update(currentDb, item);
+                }
+                var newItem = Repository.Get(currentDb, item.ID);
+                item.Rev = newItem.Rev;
             }
-            else
-            {
-                Repository.Update(currentDb, item);
-            }
-            var newItem = Repository.Get(currentDb, item.ID);
-            item.Rev = newItem.Rev;
 
         }
 

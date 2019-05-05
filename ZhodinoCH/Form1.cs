@@ -20,9 +20,9 @@ namespace ZhodinoCH
         private void Form1_Load(object sender, EventArgs e)
         {
             dataGridView1.DataSource = source;
-            if (Properties.Settings.Default.User.Length > 0)
+            if (Settings.Default.User.Length > 0)
             {
-                toolStripLabel1.Text = Properties.Settings.Default.User;
+                toolStripLabel1.Text = Settings.Default.User;
             }
             else
             {
@@ -216,8 +216,8 @@ namespace ZhodinoCH
             toolStripLabel1.Visible = true;
             toolStripTextBox1.Visible = false;
             toolStripLabel1.Text = toolStripTextBox1.Text;
-            Properties.Settings.Default.User = toolStripTextBox1.Text;
-            Properties.Settings.Default.Save();
+            Settings.Default.User = toolStripTextBox1.Text;
+            Settings.Default.Save();
         }
 
         private void ToolStripLabel1_DoubleClick(object sender, EventArgs e)
@@ -240,8 +240,8 @@ namespace ZhodinoCH
                     toolStripLabel1.Visible = true;
                     toolStripTextBox1.Visible = false;
                     toolStripLabel1.Text = toolStripTextBox1.Text;
-                    Properties.Settings.Default.User = toolStripTextBox1.Text;
-                    Properties.Settings.Default.Save();
+                    Settings.Default.User = toolStripTextBox1.Text;
+                    Settings.Default.Save();
                     break;
             }
         }

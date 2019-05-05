@@ -95,7 +95,8 @@ namespace ZhodinoCH
 
         public CalendarEditingControl()
         {
-            this.Format = DateTimePickerFormat.Short;
+            this.Format = DateTimePickerFormat.Custom;
+            this.CustomFormat = "yyyy-MM-dd";
         }
 
         // Implements the IDataGridViewEditingControl.EditingControlFormattedValue 

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Net;
 using System.Windows.Forms;
+using ZhodinoCH.Properties;
 
 namespace ZhodinoCH
 {
@@ -18,17 +19,21 @@ namespace ZhodinoCH
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("ru-RU");
-            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
-            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
             dataGridView1.DataSource = source;
-            toolStripLabel1.Text = "[" + NetUtils.LocalIPAddress() + "]";
+            if (Properties.Settings.Default.User.Length > 0)
+            {
+                toolStripLabel1.Text = Properties.Settings.Default.User;
+            }
+            else
+            {
+                toolStripLabel1.Text = "[" + NetUtils.LocalIPAddress() + "]";
+            }
             toolStripButton1.PerformClick();
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            Text = "<<" + NetUtils.GetLocalName() + ">> " + toolStripButton1.Text;
+            Text = toolStripButton1.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
             currentDb = "belgosstrakh";
             toolStripButton1.Checked = true;
             toolStripButton2.Checked = false;
@@ -65,7 +70,7 @@ namespace ZhodinoCH
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            Text = "<<" + NetUtils.GetLocalName() + ">> " + toolStripButton1.Text;
+            Text = toolStripButton1.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
             currentDb = "bca";
             toolStripButton1.Checked = false;
             toolStripButton2.Checked = true;
@@ -79,7 +84,7 @@ namespace ZhodinoCH
 
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
-            Text = "<<" + NetUtils.GetLocalName() + ">> " + toolStripButton1.Text;
+            Text = toolStripButton1.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
             currentDb = "viscera";
             toolStripButton1.Checked = false;
             toolStripButton2.Checked = false;
@@ -93,7 +98,7 @@ namespace ZhodinoCH
 
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
-            Text = "<<" + NetUtils.GetLocalName() + ">> " + toolStripButton1.Text;
+            Text = toolStripButton1.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
             currentDb = "pelvic";
             toolStripButton1.Checked = false;
             toolStripButton2.Checked = false;
@@ -107,7 +112,7 @@ namespace ZhodinoCH
 
         private void toolStripButton5_Click(object sender, EventArgs e)
         {
-            Text = "<<" + NetUtils.GetLocalName() + ">> " + toolStripButton1.Text;
+            Text = toolStripButton1.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
             currentDb = "heart";
             toolStripButton1.Checked = false;
             toolStripButton2.Checked = false;
@@ -121,7 +126,7 @@ namespace ZhodinoCH
 
         private void toolStripButton6_Click(object sender, EventArgs e)
         {
-            Text = "<<" + NetUtils.GetLocalName() + ">> " + toolStripButton1.Text;
+            Text = toolStripButton1.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
             currentDb = "fgds";
             toolStripButton1.Checked = false;
             toolStripButton2.Checked = false;
@@ -135,7 +140,7 @@ namespace ZhodinoCH
 
         private void toolStripButton7_Click(object sender, EventArgs e)
         {
-            Text = "<<" + NetUtils.GetLocalName() + ">> " + toolStripButton1.Text;
+            Text = toolStripButton1.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
             currentDb = "thyroid";
             toolStripButton1.Checked = false;
             toolStripButton2.Checked = false;
@@ -211,7 +216,7 @@ namespace ZhodinoCH
             toolStripLabel1.Visible = true;
             toolStripTextBox1.Visible = false;
             toolStripLabel1.Text = toolStripTextBox1.Text;
-            Properties.Settings.Default["User"] = toolStripTextBox1.Text;
+            Properties.Settings.Default.User = toolStripTextBox1.Text;
             Properties.Settings.Default.Save();
         }
 
@@ -235,7 +240,7 @@ namespace ZhodinoCH
                     toolStripLabel1.Visible = true;
                     toolStripTextBox1.Visible = false;
                     toolStripLabel1.Text = toolStripTextBox1.Text;
-                    Properties.Settings.Default["User"] = toolStripTextBox1.Text;
+                    Properties.Settings.Default.User = toolStripTextBox1.Text;
                     Properties.Settings.Default.Save();
                     break;
             }

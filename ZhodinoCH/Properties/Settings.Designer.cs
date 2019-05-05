@@ -41,12 +41,33 @@ namespace ZhodinoCH.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("192.168.0.105")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string User {
             get {
                 return ((string)(this["User"]));
+            }
+            set {
+                this["User"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Запись на УЗИ")]
+        public string Application {
+            get {
+                return ((string)(this["Application"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("v2019.05.05-alpha")]
+        public string Version {
+            get {
+                return ((string)(this["Version"]));
             }
         }
     }

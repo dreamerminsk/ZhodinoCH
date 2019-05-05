@@ -70,7 +70,7 @@ namespace ZhodinoCH
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            Text = toolStripButton1.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
+            Text = toolStripButton2.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
             currentDb = "bca";
             toolStripButton1.Checked = false;
             toolStripButton2.Checked = true;
@@ -84,7 +84,7 @@ namespace ZhodinoCH
 
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
-            Text = toolStripButton1.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
+            Text = toolStripButton3.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
             currentDb = "viscera";
             toolStripButton1.Checked = false;
             toolStripButton2.Checked = false;
@@ -98,7 +98,7 @@ namespace ZhodinoCH
 
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
-            Text = toolStripButton1.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
+            Text = toolStripButton4.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
             currentDb = "pelvic";
             toolStripButton1.Checked = false;
             toolStripButton2.Checked = false;
@@ -112,7 +112,7 @@ namespace ZhodinoCH
 
         private void toolStripButton5_Click(object sender, EventArgs e)
         {
-            Text = toolStripButton1.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
+            Text = toolStripButton5.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
             currentDb = "heart";
             toolStripButton1.Checked = false;
             toolStripButton2.Checked = false;
@@ -126,7 +126,7 @@ namespace ZhodinoCH
 
         private void toolStripButton6_Click(object sender, EventArgs e)
         {
-            Text = toolStripButton1.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
+            Text = toolStripButton6.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
             currentDb = "fgds";
             toolStripButton1.Checked = false;
             toolStripButton2.Checked = false;
@@ -140,7 +140,7 @@ namespace ZhodinoCH
 
         private void toolStripButton7_Click(object sender, EventArgs e)
         {
-            Text = toolStripButton1.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
+            Text = toolStripButton7.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
             currentDb = "thyroid";
             toolStripButton1.Checked = false;
             toolStripButton2.Checked = false;

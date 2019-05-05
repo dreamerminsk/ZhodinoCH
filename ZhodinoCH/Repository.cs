@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace ZhodinoCH
@@ -11,7 +10,7 @@ namespace ZhodinoCH
     class Repository
     {
 
-        private static string CURRENT_HOST = Properties.Settings.Default.RemoteHost;
+        private static readonly string CURRENT_HOST = Properties.Settings.Default.RemoteHost;
 
         public static bool TestLocalHost()
         {
@@ -39,7 +38,6 @@ namespace ZhodinoCH
 
         public static Record Get(string db, string id)
         {
-            var recs = new List<Record>();
             string response = DownloadString(CURRENT_HOST + "/" + db + "/" + id);
             JObject record = JObject.Parse((response));
             var rec = new Record(
@@ -118,26 +116,30 @@ namespace ZhodinoCH
 
         public static void Insert(string db, Record rec)
         {
-            JObject jsonobj = new JObject();
-            jsonobj.Add("patient", rec.Name);
-            jsonobj.Add("date", rec.Date.ToShortDateString());
-            jsonobj.Add("tel", rec.Tel);
-            jsonobj.Add("comment", rec.Comment);
-            putReq(CURRENT_HOST + "/" + db + "/" + rec.ID + "/", jsonobj);
+            JObject jsonobj = new JObject
+            {
+                { "patient", rec.Name },
+                { "date", rec.Date.ToShortDateString() },
+                { "tel", rec.Tel },
+                { "comment", rec.Comment }
+            };
+            PutReq(CURRENT_HOST + "/" + db + "/" + rec.ID + "/", jsonobj);
         }
 
         public static void Update(string db, Record rec)
         {
-            JObject jsonobj = new JObject();
-            jsonobj.Add("patient", rec.Name);
-            jsonobj.Add("date", rec.Date.ToShortDateString());
-            jsonobj.Add("tel", rec.Tel);
-            jsonobj.Add("comment", rec.Comment);
-            jsonobj.Add("_rev", rec.Rev);
-            putReq(CURRENT_HOST + "/" + db + "/" + rec.ID + "/", jsonobj);
+            JObject jsonobj = new JObject
+            {
+                { "patient", rec.Name },
+                { "date", rec.Date.ToShortDateString() },
+                { "tel", rec.Tel },
+                { "comment", rec.Comment },
+                { "_rev", rec.Rev }
+            };
+            PutReq(CURRENT_HOST + "/" + db + "/" + rec.ID + "/", jsonobj);
         }
 
-        private static void putReq(string url, JObject jsonobj)
+        private static void PutReq(string url, JObject jsonobj)
         {
             var encoding = Encoding.GetEncoding("utf-8");
             byte[] arr = encoding.GetBytes(jsonobj.ToString());

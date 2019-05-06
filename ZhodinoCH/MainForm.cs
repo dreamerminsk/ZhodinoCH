@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 using ZhodinoCH.Properties;
 
@@ -23,6 +24,7 @@ namespace ZhodinoCH
             for (int i = 0; i < Settings.Default.DbTitles.Count; i++)
             {
                 var item = new ToolStripButton(Settings.Default.DbTitles[i]);
+                item.Font = Settings.Default.ToolButtonFont;
                 item.Tag = Settings.Default.DbNames[i];
                 item.Click += Item_Click;
                 toolButtons.Add(item);
@@ -49,7 +51,7 @@ namespace ZhodinoCH
             {
                 if (item == toolButton)
                 {
-                    item.Checked = true;
+                    item.Checked = true;                    
                 }
                 else
                 {

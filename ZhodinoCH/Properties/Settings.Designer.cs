@@ -106,5 +106,14 @@ namespace ZhodinoCH.Properties {
                 return ((global::System.Collections.Specialized.StringCollection)(this["DbTitles"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Book Antiqua, 12pt")]
+        public global::System.Drawing.Font ToolButtonFont {
+            get {
+                return ((global::System.Drawing.Font)(this["ToolButtonFont"]));
+            }
+        }
     }
 }

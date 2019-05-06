@@ -64,10 +64,46 @@ namespace ZhodinoCH.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("v2019.05.05-alpha")]
+        [global::System.Configuration.DefaultSettingValueAttribute("v2019.05.06-alpha")]
         public string Version {
             get {
                 return ((string)(this["Version"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string>belgosstrakh</string>
+  <string>bca</string>
+  <string>viscera</string>
+  <string>pelvic</string>
+  <string>heart</string>
+  <string>fgds</string>
+  <string>thyroid</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection DbNames {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["DbNames"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string>БелГосСтрах</string>
+  <string>БЦА</string>
+  <string>Внутренние органы</string>
+  <string>ОМТ</string>
+  <string>Сердце</string>
+  <string>ФГДС</string>
+  <string>Щитовидка</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection DbTitles {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["DbTitles"]));
             }
         }
     }

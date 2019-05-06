@@ -15,7 +15,31 @@
       <Value Profile="(Default)">Запись на УЗИ</Value>
     </Setting>
     <Setting Name="Version" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">v2019.05.05-alpha</Value>
+      <Value Profile="(Default)">v2019.05.06-alpha</Value>
+    </Setting>
+    <Setting Name="DbNames" Type="System.Collections.Specialized.StringCollection" Scope="Application">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;belgosstrakh&lt;/string&gt;
+  &lt;string&gt;bca&lt;/string&gt;
+  &lt;string&gt;viscera&lt;/string&gt;
+  &lt;string&gt;pelvic&lt;/string&gt;
+  &lt;string&gt;heart&lt;/string&gt;
+  &lt;string&gt;fgds&lt;/string&gt;
+  &lt;string&gt;thyroid&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="DbTitles" Type="System.Collections.Specialized.StringCollection" Scope="Application">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;БелГосСтрах&lt;/string&gt;
+  &lt;string&gt;БЦА&lt;/string&gt;
+  &lt;string&gt;Внутренние органы&lt;/string&gt;
+  &lt;string&gt;ОМТ&lt;/string&gt;
+  &lt;string&gt;Сердце&lt;/string&gt;
+  &lt;string&gt;ФГДС&lt;/string&gt;
+  &lt;string&gt;Щитовидка&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

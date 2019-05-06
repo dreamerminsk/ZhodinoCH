@@ -10,7 +10,7 @@ namespace ZhodinoCH
     class Repository
     {
 
-        private static readonly string CURRENT_HOST = Properties.Settings.Default.LocalHost;
+        private static readonly string CURRENT_HOST = Properties.Settings.Default.RemoteHost;
 
         public static bool TestHost(string host)
         {

@@ -12,12 +12,11 @@ namespace ZhodinoCH
 
         private static readonly string CURRENT_HOST = Properties.Settings.Default.LocalHost;
 
-        public static bool TestLocalHost()
+        public static bool TestHost(string host)
         {
             try
             {
                 WebClient client = new WebClient();
-                var host = Properties.Settings.Default.LocalHost;
                 string response = client.DownloadString(new Uri(host + "/_uuids"));
                 return true;
             }
@@ -105,12 +104,12 @@ namespace ZhodinoCH
             }
         }
 
-        private static Task<string> DownloadStringAsync(string uri)
+        private static async Task<string> DownloadStringAsync(string uri)
         {
             using (WebClient webClient = new WebClient())
             {
                 webClient.Encoding = Encoding.UTF8;
-                return Task<string>.Factory.StartNew(() => { return webClient.DownloadString(new Uri(uri)); });
+                return webClient.DownloadString(new Uri(uri));
             }
         }
 

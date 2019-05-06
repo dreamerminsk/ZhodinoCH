@@ -1,18 +1,17 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Net;
 using System.Windows.Forms;
 using ZhodinoCH.Properties;
 
 namespace ZhodinoCH
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         //private 
         private string currentDb = "";
         private readonly BindingList<Record> source = new BindingList<Record>();
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -60,7 +59,7 @@ namespace ZhodinoCH
             {
                 Console.WriteLine(ex.Message);
             }
-            
+
         }
 
         private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
@@ -164,7 +163,7 @@ namespace ZhodinoCH
 
         private void DataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
-            
+
         }
 
         private void DataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -194,7 +193,7 @@ namespace ZhodinoCH
 
         private void DataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            
+
         }
 
         private void SplitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
@@ -203,7 +202,7 @@ namespace ZhodinoCH
         }
 
         private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {           
+        {
         }
 
         private void ToolStripTextBox1_Click(object sender, EventArgs e)

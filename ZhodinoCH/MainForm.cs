@@ -244,5 +244,15 @@ namespace ZhodinoCH
                     break;
             }
         }
+
+        private void SplitContainer2_Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void SplitContainer2_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+
+        }
     }
 }

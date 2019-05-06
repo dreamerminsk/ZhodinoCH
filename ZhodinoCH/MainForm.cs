@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using ZhodinoCH.Properties;
@@ -9,6 +10,7 @@ namespace ZhodinoCH
     {
         //private 
         private string currentDb = "";
+        private List<ToolStripButton> toolButtons = new List<ToolStripButton>();
         private readonly BindingList<Record> source = new BindingList<Record>();
 
         public MainForm()
@@ -18,6 +20,14 @@ namespace ZhodinoCH
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            for (int i = 0; i < Settings.Default.DbTitles.Count; i++)
+            {
+                var item = new ToolStripButton(Settings.Default.DbTitles[i]);
+                item.Tag = Settings.Default.DbNames[i];
+                item.Click += Item_Click;
+                toolButtons.Add(item);
+                toolStrip1.Items.Insert(0, item);
+            }
             dataGridView1.DataSource = source;
             if (Settings.Default.User.Length > 0)
             {
@@ -27,20 +37,25 @@ namespace ZhodinoCH
             {
                 toolStripLabel1.Text = "[" + NetUtils.LocalIPAddress() + "]";
             }
-            toolStripButton1.PerformClick();
+            toolButtons[0].PerformClick();
         }
 
-        private void toolStripButton1_Click(object sender, EventArgs e)
+        private void Item_Click(object sender, EventArgs e)
         {
-            Text = toolStripButton1.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
-            currentDb = "belgosstrakh";
-            toolStripButton1.Checked = true;
-            toolStripButton2.Checked = false;
-            toolStripButton3.Checked = false;
-            toolStripButton4.Checked = false;
-            toolStripButton5.Checked = false;
-            toolStripButton6.Checked = false;
-            toolStripButton7.Checked = false;
+            ToolStripButton toolButton = (ToolStripButton)sender;
+            Text = toolButton.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
+            currentDb = toolButton.Tag.ToString();
+            foreach (var item in toolButtons)
+            {
+                if (item == toolButton)
+                {
+                    item.Checked = true;
+                }
+                else
+                {
+                    item.Checked = false;
+                }
+            }
             downloads();
         }
 
@@ -65,90 +80,6 @@ namespace ZhodinoCH
         private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
         {
 
-        }
-
-        private void toolStripButton2_Click(object sender, EventArgs e)
-        {
-            Text = toolStripButton2.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
-            currentDb = "bca";
-            toolStripButton1.Checked = false;
-            toolStripButton2.Checked = true;
-            toolStripButton3.Checked = false;
-            toolStripButton4.Checked = false;
-            toolStripButton5.Checked = false;
-            toolStripButton6.Checked = false;
-            toolStripButton7.Checked = false;
-            downloads();
-        }
-
-        private void toolStripButton3_Click(object sender, EventArgs e)
-        {
-            Text = toolStripButton3.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
-            currentDb = "viscera";
-            toolStripButton1.Checked = false;
-            toolStripButton2.Checked = false;
-            toolStripButton3.Checked = true;
-            toolStripButton4.Checked = false;
-            toolStripButton5.Checked = false;
-            toolStripButton6.Checked = false;
-            toolStripButton7.Checked = false;
-            downloads();
-        }
-
-        private void toolStripButton4_Click(object sender, EventArgs e)
-        {
-            Text = toolStripButton4.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
-            currentDb = "pelvic";
-            toolStripButton1.Checked = false;
-            toolStripButton2.Checked = false;
-            toolStripButton3.Checked = false;
-            toolStripButton4.Checked = true;
-            toolStripButton5.Checked = false;
-            toolStripButton6.Checked = false;
-            toolStripButton7.Checked = false;
-            downloads();
-        }
-
-        private void toolStripButton5_Click(object sender, EventArgs e)
-        {
-            Text = toolStripButton5.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
-            currentDb = "heart";
-            toolStripButton1.Checked = false;
-            toolStripButton2.Checked = false;
-            toolStripButton3.Checked = false;
-            toolStripButton4.Checked = false;
-            toolStripButton5.Checked = true;
-            toolStripButton6.Checked = false;
-            toolStripButton7.Checked = false;
-            downloads();
-        }
-
-        private void toolStripButton6_Click(object sender, EventArgs e)
-        {
-            Text = toolStripButton6.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
-            currentDb = "fgds";
-            toolStripButton1.Checked = false;
-            toolStripButton2.Checked = false;
-            toolStripButton3.Checked = false;
-            toolStripButton4.Checked = false;
-            toolStripButton5.Checked = false;
-            toolStripButton6.Checked = true;
-            toolStripButton7.Checked = false;
-            downloads();
-        }
-
-        private void toolStripButton7_Click(object sender, EventArgs e)
-        {
-            Text = toolStripButton7.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
-            currentDb = "thyroid";
-            toolStripButton1.Checked = false;
-            toolStripButton2.Checked = false;
-            toolStripButton3.Checked = false;
-            toolStripButton4.Checked = false;
-            toolStripButton5.Checked = false;
-            toolStripButton6.Checked = false;
-            toolStripButton7.Checked = true;
-            downloads();
         }
 
         private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)

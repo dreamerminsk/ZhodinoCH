@@ -108,8 +108,10 @@ namespace ZhodinoCH
         {
             using (WebClient webClient = new WebClient())
             {
+                string text = "";
                 webClient.Encoding = Encoding.UTF8;
-                return webClient.DownloadString(new Uri(uri));
+                text = await webClient.DownloadStringTaskAsync(new Uri(uri));
+                return text;
             }
         }
 

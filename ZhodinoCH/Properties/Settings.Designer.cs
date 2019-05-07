@@ -34,7 +34,7 @@ namespace ZhodinoCH.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://178.124.170.17:5984")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://kchureyna:k111098chureyna@178.124.170.17:5984")]
         public string RemoteHost {
             get {
                 return ((string)(this["RemoteHost"]));

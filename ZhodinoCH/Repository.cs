@@ -126,7 +126,38 @@ namespace ZhodinoCH
             PutReq(CURRENT_HOST + "/" + db + "/" + rec.ID + "/", jsonobj);
         }
 
-        private static void PutReq(string url, JObject jsonobj)
+        public static void InsertUser(string user, string password)
+        {
+            JObject jsonobj = new JObject
+            {
+                { "name", user },
+                { "password", password },
+                { "type", "user" },
+                { "roles", new JArray() }
+            };
+            var res = PutReq(CURRENT_HOST + "/_users/org.couchdb.user:" + user, jsonobj);
+            Console.WriteLine(res);
+        }
+
+        public static void InsertSecurity(string db, string user)
+        {
+            var names = new JArray();
+            names.Add(user);
+            var members = new JObject
+            {
+                { "names", names },
+                { "roles", new JArray() }
+            };
+            JObject jsonobj = new JObject
+            {
+                { "admins", new JObject() },
+                { "members", members}
+            };
+            var res = PutReq(CURRENT_HOST + "/" + db + "/_security", jsonobj);
+            Console.WriteLine(res);
+        }
+
+        private static string PutReq(string url, JObject jsonobj)
         {
             var encoding = Encoding.GetEncoding("utf-8");
             byte[] arr = encoding.GetBytes(jsonobj.ToString());
@@ -141,6 +172,7 @@ namespace ZhodinoCH
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             string returnString = response.StatusCode.ToString();
             response.Close();
+            return returnString;
         }
     }
 }

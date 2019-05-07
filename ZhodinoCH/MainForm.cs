@@ -22,6 +22,8 @@ namespace ZhodinoCH
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            //Repository.InsertUser("editor001", "111");
+            //Repository.InsertSecurity("belgosstrakh", "editor");
             for (int i = 0; i < Settings.Default.DbTitles.Count; i++)
             {
                 var item = new ToolStripButton(Settings.Default.DbTitles[i])
@@ -56,12 +58,10 @@ namespace ZhodinoCH
                 if (item == toolButton)
                 {
                     item.Checked = true;
-                    item.BackColor = Color.Aqua;
                 }
                 else
                 {
                     item.Checked = false;
-                    item.BackColor = SystemColors.Control;
                 }
             }
         }

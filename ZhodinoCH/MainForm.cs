@@ -23,9 +23,11 @@ namespace ZhodinoCH
         {
             for (int i = 0; i < Settings.Default.DbTitles.Count; i++)
             {
-                var item = new ToolStripButton(Settings.Default.DbTitles[i]);
-                item.Font = Settings.Default.ToolButtonFont;
-                item.Tag = Settings.Default.DbNames[i];
+                var item = new ToolStripButton(Settings.Default.DbTitles[i])
+                {
+                    Font = Settings.Default.ToolButtonFont,
+                    Tag = Settings.Default.DbNames[i]
+                };
                 item.Click += Item_Click;
                 toolButtons.Add(item);
                 toolStrip1.Items.Insert(0, item);
@@ -51,11 +53,13 @@ namespace ZhodinoCH
             {
                 if (item == toolButton)
                 {
-                    item.Checked = true;                    
+                    item.Checked = true;
+                    item.BackColor = Color.Aqua;
                 }
                 else
                 {
                     item.Checked = false;
+                    item.BackColor = SystemColors.Control;
                 }
             }
             downloads();
@@ -65,7 +69,7 @@ namespace ZhodinoCH
         {
             try
             {
-                var recs = await Repository.GetAllAsync(currentDb);
+                var recs = await Repository.GetAllAsync(currentDb).ConfigureAwait(true);
                 source.Clear();
                 foreach (var rec in recs)
                 {
@@ -104,7 +108,7 @@ namespace ZhodinoCH
             try
             {
                 var item = source[e.RowIndex];
-                if (item.Rev == "")
+                if (string.IsNullOrEmpty(item.Rev))
                 {
                     Repository.Insert(currentDb, item);
                 }
@@ -176,16 +180,6 @@ namespace ZhodinoCH
                     Settings.Default.Save();
                     break;
             }
-        }
-
-        private void SplitContainer2_Panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void SplitContainer2_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-
         }
     }
 }

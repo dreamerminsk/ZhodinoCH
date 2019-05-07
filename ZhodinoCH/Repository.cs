@@ -110,7 +110,7 @@ namespace ZhodinoCH
             {
                 string text = "";
                 webClient.Encoding = Encoding.UTF8;
-                text = await webClient.DownloadStringTaskAsync(new Uri(uri));
+                text = await webClient.DownloadStringTaskAsync(new Uri(uri)).ConfigureAwait(false);
                 return text;
             }
         }
@@ -144,7 +144,7 @@ namespace ZhodinoCH
         {
             var encoding = Encoding.GetEncoding("utf-8");
             byte[] arr = encoding.GetBytes(jsonobj.ToString());
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(new Uri(url));
             request.Method = "PUT";
             request.ContentType = "application/json";
             request.ContentLength = arr.Length;

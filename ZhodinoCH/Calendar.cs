@@ -18,7 +18,6 @@ namespace ZhodinoCH
             }
             set
             {
-                // Ensure that the cell used for the template is a CalendarCell.
                 if (value != null &&
                     !value.GetType().IsAssignableFrom(typeof(CalendarCell)))
                 {
@@ -35,19 +34,16 @@ namespace ZhodinoCH
         public CalendarCell()
             : base()
         {
-            // Use the short date format.
             this.Style.Format = "yyyy-MM-dd";
         }
 
         public override void InitializeEditingControl(int rowIndex, object
             initialFormattedValue, DataGridViewCellStyle dataGridViewCellStyle)
         {
-            // Set the value of the editing control to the current cell value.
             base.InitializeEditingControl(rowIndex, initialFormattedValue,
                 dataGridViewCellStyle);
             CalendarEditingControl ctl =
                 DataGridView.EditingControl as CalendarEditingControl;
-            // Use the default row value when Value property is null.
             if (this.Value == null)
             {
                 ctl.Value = (DateTime)this.DefaultNewRowValue;
@@ -62,7 +58,6 @@ namespace ZhodinoCH
         {
             get
             {
-                // Return the type of the editing control that CalendarCell uses.
                 return typeof(CalendarEditingControl);
             }
         }
@@ -71,8 +66,6 @@ namespace ZhodinoCH
         {
             get
             {
-                // Return the type of the value that CalendarCell contains.
-
                 return typeof(DateTime);
             }
         }
@@ -81,13 +74,12 @@ namespace ZhodinoCH
         {
             get
             {
-                // Use the current date and time as the default value.
                 return DateTime.Now;
             }
         }
     }
 
-    class CalendarEditingControl : DateTimePicker, IDataGridViewEditingControl
+    public class CalendarEditingControl : DateTimePicker, IDataGridViewEditingControl
     {
         DataGridView dataGridView;
         private bool valueChanged = false;
@@ -99,8 +91,6 @@ namespace ZhodinoCH
             this.CustomFormat = "yyyy-MM-dd";
         }
 
-        // Implements the IDataGridViewEditingControl.EditingControlFormattedValue 
-        // property.
         public object EditingControlFormattedValue
         {
             get
@@ -113,15 +103,10 @@ namespace ZhodinoCH
                 {
                     try
                     {
-                        // This will throw an exception of the string is 
-                        // null, empty, or not in the format of a date.
                         this.Value = DateTime.Parse((String)value);
                     }
-                    catch
+                    catch (FormatException)
                     {
-                        // In the case of an exception, just use the 
-                        // default value so we're not left with a null
-                        // value.
                         this.Value = DateTime.Now;
                     }
                 }

@@ -12,20 +12,6 @@ namespace ZhodinoCH
 
         private static readonly string CURRENT_HOST = Properties.Settings.Default.RemoteHost;
 
-        public static bool TestHost(string host)
-        {
-            try
-            {
-                WebClient client = new WebClient();
-                string response = client.DownloadString(new Uri(host + "/_uuids"));
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
         public static string GetID()
         {
             WebClient client = new WebClient();
@@ -75,7 +61,7 @@ namespace ZhodinoCH
         public static async Task<List<Record>> GetAllAsync(string db)
         {
             var recs = new List<Record>();
-            string response = await DownloadStringAsync(CURRENT_HOST + "/" + db + "/_all_docs?include_docs=true");
+            string response = await DownloadStringAsync(CURRENT_HOST + "/" + db + "/_all_docs?include_docs=true").ConfigureAwait(false);
             JObject records = JObject.Parse((response));
             JArray rows = (JArray)records["rows"];
             foreach (var row in rows)

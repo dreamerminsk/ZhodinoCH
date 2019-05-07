@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZhodinoCH.Properties;
 
@@ -28,7 +29,7 @@ namespace ZhodinoCH
                     Font = Settings.Default.ToolButtonFont,
                     Tag = Settings.Default.DbNames[i]
                 };
-                item.Click += Item_Click;
+                item.Click += Item_ClickAsync;
                 toolButtons.Add(item);
                 toolStrip1.Items.Insert(0, item);
             }
@@ -44,8 +45,9 @@ namespace ZhodinoCH
             toolButtons[0].PerformClick();
         }
 
-        private void Item_Click(object sender, EventArgs e)
+        private async void Item_ClickAsync(object sender, EventArgs e)
         {
+            await downloads().ConfigureAwait(true);
             ToolStripButton toolButton = (ToolStripButton)sender;
             Text = toolButton.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
             currentDb = toolButton.Tag.ToString();
@@ -62,10 +64,9 @@ namespace ZhodinoCH
                     item.BackColor = SystemColors.Control;
                 }
             }
-            downloads();
         }
 
-        private async void downloads()
+        private async Task downloads()
         {
             try
             {
@@ -80,7 +81,6 @@ namespace ZhodinoCH
             {
                 Console.WriteLine(ex.Message);
             }
-
         }
 
         private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)

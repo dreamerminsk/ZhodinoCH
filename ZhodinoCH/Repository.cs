@@ -60,8 +60,10 @@ namespace ZhodinoCH
 
         public static async Task<List<Record>> GetAllAsync(string db)
         {
+            Console.WriteLine("GetAllAsync(" + db + ")");
             var recs = new List<Record>();
             string response = await DownloadStringAsync(CURRENT_HOST + "/" + db + "/_all_docs?include_docs=true").ConfigureAwait(false);
+            Console.WriteLine(response);
             JObject records = JObject.Parse((response));
             JArray rows = (JArray)records["rows"];
             foreach (var row in rows)
@@ -85,6 +87,8 @@ namespace ZhodinoCH
             using (WebClient webClient = new WebClient())
             {
                 webClient.Encoding = Encoding.UTF8;
+                webClient.Headers["User-Agent"] = "Mozilla";
+                webClient.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes("editor:111"));
                 string response = webClient.DownloadString(new Uri(uri));
                 return response;
             }
@@ -96,6 +100,8 @@ namespace ZhodinoCH
             {
                 string text = "";
                 webClient.Encoding = Encoding.UTF8;
+                webClient.Headers["User-Agent"] = "Mozilla";
+                webClient.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes("editor:111"));
                 text = await webClient.DownloadStringTaskAsync(new Uri(uri)).ConfigureAwait(false);
                 return text;
             }

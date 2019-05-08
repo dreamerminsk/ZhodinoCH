@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -12,6 +13,7 @@ namespace ZhodinoCH
     {
         //private 
         private string currentDb = "";
+        private ConcurrentQueue<string> queue = new ConcurrentQueue<string>();
         private List<ToolStripButton> toolButtons = new List<ToolStripButton>();
         private readonly BindingList<Record> source = new BindingList<Record>();
 
@@ -49,10 +51,10 @@ namespace ZhodinoCH
 
         private async void Item_ClickAsync(object sender, EventArgs e)
         {
-            await downloads().ConfigureAwait(true);
             ToolStripButton toolButton = (ToolStripButton)sender;
-            Text = toolButton.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
             currentDb = toolButton.Tag.ToString();
+            await downloads().ConfigureAwait(true);            
+            Text = toolButton.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;            
             foreach (var item in toolButtons)
             {
                 if (item == toolButton)
@@ -67,7 +69,7 @@ namespace ZhodinoCH
         }
 
         private async Task downloads()
-        {
+        {            
             try
             {
                 var recs = await Repository.GetAllAsync(currentDb).ConfigureAwait(true);
@@ -79,7 +81,8 @@ namespace ZhodinoCH
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+                _ = MessageBox.Show(ex.TargetSite.Name, ex.GetType().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

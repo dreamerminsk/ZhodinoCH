@@ -6,7 +6,7 @@
       <Value Profile="(Default)">http://192.168.10.253:5984</Value>
     </Setting>
     <Setting Name="RemoteHost" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">http://kchureyna:k111098chureyna@178.124.170.17:5984</Value>
+      <Value Profile="(Default)">http://178.124.170.17:5984</Value>
     </Setting>
     <Setting Name="User" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

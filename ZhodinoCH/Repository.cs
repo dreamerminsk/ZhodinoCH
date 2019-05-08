@@ -172,6 +172,8 @@ namespace ZhodinoCH
             request.ContentType = "application/json";
             request.ContentLength = arr.Length;
             request.KeepAlive = false;
+            request.UserAgent = "Mozilla";
+            request.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes("editor:111")));
             var dataStream = request.GetRequestStream();
             dataStream.Write(arr, 0, arr.Length);
             dataStream.Close();

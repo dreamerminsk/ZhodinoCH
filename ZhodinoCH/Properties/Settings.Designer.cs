@@ -64,7 +64,7 @@ namespace ZhodinoCH.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("v2019.05.06-alpha")]
+        [global::System.Configuration.DefaultSettingValueAttribute("v2019.05.09-alpha")]
         public string Version {
             get {
                 return ((string)(this["Version"]));

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -29,7 +30,7 @@ namespace ZhodinoCH
         {
             this.ID = ID;
             this.Rev = rev;
-            this.Date = DateTime.Parse(date);
+            this.Date = DateTime.Parse(date, CultureInfo.InvariantCulture);
             this.Name = name;
             this.Tel = tel;
             this.Comment = comment;

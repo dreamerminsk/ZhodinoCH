@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace ZhodinoCH
@@ -95,7 +96,7 @@ namespace ZhodinoCH
         {
             get
             {
-                return this.Value.ToShortDateString();
+                return this.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
             }
             set
             {
@@ -103,7 +104,7 @@ namespace ZhodinoCH
                 {
                     try
                     {
-                        this.Value = DateTime.Parse((String)value);
+                        this.Value = DateTime.Parse((String)value, CultureInfo.InvariantCulture);
                     }
                     catch (FormatException)
                     {

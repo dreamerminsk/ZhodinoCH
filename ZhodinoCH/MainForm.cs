@@ -81,6 +81,7 @@ namespace ZhodinoCH
             }
             catch (Exception ex)
             {
+                source.Clear();
                 Console.WriteLine(ex.StackTrace);
                 _ = MessageBox.Show(ex.TargetSite.Name, ex.GetType().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

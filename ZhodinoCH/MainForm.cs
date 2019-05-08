@@ -11,9 +11,9 @@ namespace ZhodinoCH
 {
     public partial class MainForm : Form
     {
-        //private 
+
         private string currentDb = "";
-        private ConcurrentQueue<string> queue = new ConcurrentQueue<string>();
+        //private ConcurrentQueue<string> queue = new ConcurrentQueue<string>();
         private List<ToolStripButton> toolButtons = new List<ToolStripButton>();
         private readonly BindingList<Record> source = new BindingList<Record>();
 

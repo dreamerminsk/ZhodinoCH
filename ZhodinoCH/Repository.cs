@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -112,7 +113,7 @@ namespace ZhodinoCH
             JObject jsonobj = new JObject
             {
                 { "patient", rec.Name },
-                { "date", rec.Date.ToShortDateString() },
+                { "date", rec.Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) },
                 { "tel", rec.Tel },
                 { "comment", rec.Comment }
             };
@@ -124,7 +125,7 @@ namespace ZhodinoCH
             JObject jsonobj = new JObject
             {
                 { "patient", rec.Name },
-                { "date", rec.Date.ToShortDateString() },
+                { "date", rec.Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) },
                 { "tel", rec.Tel },
                 { "comment", rec.Comment },
                 { "_rev", rec.Rev }

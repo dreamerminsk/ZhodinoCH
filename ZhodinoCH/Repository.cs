@@ -148,17 +148,17 @@ namespace ZhodinoCH
 
         public static void InsertSecurity(string db, string user)
         {
-            var names = new JArray();
-            names.Add(user);
-            var members = new JObject
-            {
-                { "names", names },
-                { "roles", new JArray() }
-            };
             JObject jsonobj = new JObject
             {
                 { "admins", new JObject() },
-                { "members", members}
+                { "members", new JObject
+            {
+                { "names", new JArray
+            {
+                user
+            }},
+                { "roles", new JArray() }
+            }}
             };
             var res = PutReq(CURRENT_HOST + "/" + db + "/_security", jsonobj);
             Console.WriteLine(res);

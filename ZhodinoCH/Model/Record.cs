@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using ZhodinoCH.Utils;
 
 namespace ZhodinoCH.Model
 {
@@ -14,16 +15,20 @@ namespace ZhodinoCH.Model
         public string Name { get; set; }
         public string Tel { get; set; }
         public string Comment { get; set; }
-        
+        public DateTime Created { get; set; }
+        public DateTime LastModified { get; set; }
+
 
         public Record()
         {
-            ID = Repository.GetID();
+            ID = PushIDGenerator.GeneratePushId();
             Rev = "";
             Date = DateTime.Now;
             Name = "";
             Tel = "";
             Comment = "";
+            Created = DateTime.Now;
+            LastModified = DateTime.Now;
         }
 
         public Record(String ID, String rev, String date, String name, String tel, String comment)

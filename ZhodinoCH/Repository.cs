@@ -34,15 +34,6 @@ namespace ZhodinoCH
             }
         }
 
-        public static string GetID()
-        {
-            WebClient client = new WebClient();
-            string response = client.DownloadString(new Uri(CURRENT_HOST + "/_uuids"));
-            JObject uuids = JObject.Parse(response);
-            JToken uuid = uuids["uuids"][0];
-            return (string)uuid;
-        }
-
         public static Record Get(string db, string id)
         {
             string response = DownloadString(CURRENT_HOST + "/" + db + "/" + id);

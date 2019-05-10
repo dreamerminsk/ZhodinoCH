@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 
 namespace ZhodinoCH.Utils
 {
-    public static class IDGenerator
+    public static class PushIDGenerator
     {
 
         private static readonly Random random = new Random();
@@ -19,7 +16,7 @@ namespace ZhodinoCH.Utils
 
             char[] lastRandChars = new char[72];
 
-            long now = new DateTime().Ticks;
+            long now = (DateTime.Now.Ticks - 621355968000000000L) / 10000;
 
             bool duplicateTime = now == lastPushTime;
 
@@ -31,7 +28,7 @@ namespace ZhodinoCH.Utils
                 now = (long)Math.Floor((decimal)now / 64);
             }
 
-            Debug.Assert(now != 0, "We should have converted the entire timestamp.");
+            Debug.Assert(now == 0, "We should have converted the entire timestamp.\r\n" + now);
 
             String id = new string(timeStampChars);
 
@@ -60,7 +57,7 @@ namespace ZhodinoCH.Utils
                 id += PUSH_CHARS[lastRandChars[i]];
             }
 
-            Debug.Assert(id.Length != 20, "Length should be 20.");
+            Debug.Assert(id.Length == 20, "Length should be 20.");
 
             return id;
         }

@@ -30,7 +30,7 @@ namespace ZhodinoCH
         {
             for (int i = 0; i < 128; i++)
             {
-                Console.WriteLine(IDGenerator.GeneratePushId());
+                Console.WriteLine(PushIDGenerator.GeneratePushId());
             }
             for (int i = 0; i < Settings.Default.DbTitles.Count; i++)
             {

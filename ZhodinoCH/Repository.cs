@@ -4,15 +4,35 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ZhodinoCH.Model;
 
 namespace ZhodinoCH
 {
-    class Repository
+    public static class Repository
     {
 
-        private static readonly string CURRENT_HOST = Properties.Settings.Default.LocalHost;
+        private static readonly string CURRENT_HOST = GetActiveHost();
+
+        private static string GetActiveHost()
+        {
+            var tasks = new List<Task<string>>()
+            {
+                Task<string>.Factory.StartNew(() => DownloadString(Properties.Settings.Default.RemoteHost)),
+                Task<string>.Factory.StartNew(() => DownloadString(Properties.Settings.Default.LocalHost))                
+            };
+            var taskIndex = Task.WaitAny(tasks.ToArray());
+            switch(taskIndex)
+            {
+                case 0:
+                    return Properties.Settings.Default.RemoteHost;
+                case 1:
+                    return Properties.Settings.Default.LocalHost;
+                default:
+                    return "127.0.0.1:5984";
+            }
+        }
 
         public static string GetID()
         {
@@ -100,6 +120,7 @@ namespace ZhodinoCH
         {
             using (WebClient webClient = new WebClient())
             {
+                Console.WriteLine(uri);
                 string text = "";
                 webClient.Encoding = Encoding.UTF8;
                 webClient.Headers["User-Agent"] = "Mozilla";

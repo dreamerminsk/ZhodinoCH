@@ -26,17 +26,6 @@ namespace ZhodinoCH
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //for (int i = 1000; i < 10000; i++)
-            //{
-            //    var rec = new Record(Guid.NewGuid().ToString(),
-            //        null, DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
-            //        "name-" + i, "" + i + "" + (i+7), "comment");
-            //    Repository.Insert("fgds", rec);
-            //    Console.WriteLine(i + ". " + rec.ID);
-            //    Thread.Sleep(36);
-            //}
-            //Repository.InsertUser("editor001", "111");
-            //Repository.InsertSecurity("belgosstrakh", "editor");
             for (int i = 0; i < Settings.Default.DbTitles.Count; i++)
             {
                 var item = new ToolStripButton(Settings.Default.DbTitles[i])
@@ -49,14 +38,7 @@ namespace ZhodinoCH
                 toolStrip1.Items.Insert(0, item);
             }
             dataGridView1.DataSource = source;
-            if (Settings.Default.User.Length > 0)
-            {
-                toolStripLabel1.Text = Settings.Default.User;
-            }
-            else
-            {
-                toolStripLabel1.Text = "[" + NetUtils.LocalIPAddress() + "]";
-            }
+            toolStripLabel1.Text = "[" + NetUtils.LocalIPAddress() + "]";
             toolButtons[0].PerformClick();
         }
 
@@ -107,11 +89,44 @@ namespace ZhodinoCH
 
         private void DataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
-
+            DataGridView dataGridView = (DataGridView)sender;
+            
+            Console.WriteLine(sender.GetType().Name);
         }
 
         private void DataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            
+        }
+
+        private void DataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+
+        }
+
+        private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void DataGridView1_CellLeave(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void DataGridView1_RowLeave(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            Console.WriteLine("DataGridView1_CellValueChanged");
             try
             {
                 var item = source[e.RowIndex];
@@ -130,7 +145,7 @@ namespace ZhodinoCH
             { }
         }
 
-        private void DataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
 
         }

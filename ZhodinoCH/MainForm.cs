@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZhodinoCH.Model;
 using ZhodinoCH.Properties;
+using ZhodinoCH.Utils;
 
 namespace ZhodinoCH
 {
@@ -27,6 +28,10 @@ namespace ZhodinoCH
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            for (int i = 0; i < 128; i++)
+            {
+                Console.WriteLine(IDGenerator.GeneratePushId());
+            }
             for (int i = 0; i < Settings.Default.DbTitles.Count; i++)
             {
                 var item = new ToolStripButton(Settings.Default.DbTitles[i])

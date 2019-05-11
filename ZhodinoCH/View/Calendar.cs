@@ -88,8 +88,9 @@ namespace ZhodinoCH.View
 
         public CalendarEditingControl()
         {
-            this.Format = DateTimePickerFormat.Custom;
-            this.CustomFormat = "yyyy-MM-dd";
+            Format = DateTimePickerFormat.Custom;
+            CustomFormat = "yyyy-MM-dd";
+            Font = new System.Drawing.Font("Book Antiqua", 9.75f);
         }
 
         public object EditingControlFormattedValue

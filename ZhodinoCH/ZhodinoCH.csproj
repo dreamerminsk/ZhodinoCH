@@ -125,11 +125,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Utils\IDGenerator.cs" />
+    <Compile Include="Utils\PushIDGenerator.cs" />
     <Compile Include="View\Calendar.cs" />
     <Compile Include="Model\Session.cs" />
     <Compile Include="NetUtils.cs" />
-    <Compile Include="Model\Record.cs" />
+    <Compile Include="Model\QueueItem.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

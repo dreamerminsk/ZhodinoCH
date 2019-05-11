@@ -19,7 +19,7 @@ namespace ZhodinoCH
         private string currentDb = "";
         //private ConcurrentQueue<string> queue = new ConcurrentQueue<string>();
         private List<ToolStripButton> toolButtons = new List<ToolStripButton>();
-        private readonly BindingList<Record> source = new BindingList<Record>();
+        private readonly BindingList<QueueItem> source = new BindingList<QueueItem>();
 
         public MainForm()
         {
@@ -148,6 +148,11 @@ namespace ZhodinoCH
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
+
+        private void DataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
 
         }

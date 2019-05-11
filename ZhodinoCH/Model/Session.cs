@@ -7,5 +7,8 @@ namespace ZhodinoCH.Model
 {
     public class Session
     {
+
+
+
     }
 }

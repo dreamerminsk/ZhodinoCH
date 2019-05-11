@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using ZhodinoCH.Utils;
 
 namespace ZhodinoCH.Model
 {
-    public class Record
+    public class QueueItem
     {
         public string ID { get; set; }
         public string Rev { get; set; }
@@ -19,7 +17,7 @@ namespace ZhodinoCH.Model
         public DateTime LastModified { get; set; }
 
 
-        public Record()
+        public QueueItem()
         {
             ID = PushIDGenerator.GeneratePushId();
             Rev = "";
@@ -31,7 +29,7 @@ namespace ZhodinoCH.Model
             LastModified = DateTime.Now;
         }
 
-        public Record(String ID, String rev, String date, String name, String tel, String comment)
+        public QueueItem(String ID, String rev, String date, String name, String tel, String comment)
         {
             this.ID = ID;
             this.Rev = rev;

@@ -11,6 +11,8 @@ namespace ZhodinoCH
 {
     public static class Repository
     {
+        private const string LONGFORMAT = "yyyy-MM-ddTHH:mm:ss.fffffffzzz";
+
         public static string CurrentHost { get; set; }
 
         public static void CheckHost()
@@ -41,12 +43,12 @@ namespace ZhodinoCH
             }
         }
 
-        public static Record Get(string db, string id)
+        public static QueueItem Get(string db, string id)
         {
             CheckHost();
             string response = DownloadString(CurrentHost + "/" + db + "/" + id);
             JObject record = JObject.Parse((response));
-            var rec = new Record(
+            var rec = new QueueItem(
                 (string)record["_id"],
                 (string)record["_rev"],
                 (string)record["date"],
@@ -57,17 +59,17 @@ namespace ZhodinoCH
             return rec;
         }
 
-        public static List<Record> GetAll(string db)
+        public static List<QueueItem> GetAll(string db)
         {
             CheckHost();
-            var recs = new List<Record>();
+            var recs = new List<QueueItem>();
             string response = DownloadString(CurrentHost + "/" + db + "/_all_docs?include_docs=true");
             JObject records = JObject.Parse((response));
             JArray rows = (JArray)records["rows"];
             foreach (var row in rows)
             {
                 var doc = row["doc"];
-                var rec = new Record(
+                var rec = new QueueItem(
                     (string)doc["_id"],
                     (string)doc["_rev"],
                     (string)doc["date"],
@@ -80,11 +82,11 @@ namespace ZhodinoCH
             return recs;
         }
 
-        public static async Task<List<Record>> GetAllAsync(string db)
+        public static async Task<List<QueueItem>> GetAllAsync(string db)
         {
             CheckHost();
             Console.WriteLine("GetAllAsync(" + db + ")");
-            var recs = new List<Record>();
+            var recs = new List<QueueItem>();
             string response = await DownloadStringAsync(CurrentHost + "/" + db + "/_all_docs?include_docs=true").ConfigureAwait(false);
             Console.WriteLine(response);
             JObject records = JObject.Parse((response));
@@ -92,7 +94,7 @@ namespace ZhodinoCH
             foreach (var row in rows)
             {
                 var doc = row["doc"];
-                var rec = new Record(
+                var rec = new QueueItem(
                     (string)doc["_id"],
                     (string)doc["_rev"],
                     (string)doc["date"],
@@ -134,20 +136,7 @@ namespace ZhodinoCH
             }
         }
 
-        public static void Insert(string db, Record rec)
-        {
-            CheckHost();
-            JObject jsonobj = new JObject
-            {
-                { "patient", rec.Name },
-                { "date", rec.Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) },
-                { "tel", rec.Tel },
-                { "comment", rec.Comment }
-            };
-            PutReq(CurrentHost + "/" + db + "/" + rec.ID + "/", jsonobj);
-        }
-
-        public static void Update(string db, Record rec)
+        public static void Insert(string db, QueueItem rec)
         {
             CheckHost();
             JObject jsonobj = new JObject
@@ -156,6 +145,23 @@ namespace ZhodinoCH
                 { "date", rec.Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) },
                 { "tel", rec.Tel },
                 { "comment", rec.Comment },
+                { "created", rec.Created.ToString(LONGFORMAT, CultureInfo.InvariantCulture) },
+                { "last_modified", rec.LastModified.ToString(LONGFORMAT, CultureInfo.InvariantCulture)}
+            };
+            PutReq(CurrentHost + "/" + db + "/" + rec.ID + "/", jsonobj);
+        }
+
+        public static void Update(string db, QueueItem rec)
+        {
+            CheckHost();
+            JObject jsonobj = new JObject
+            {
+                { "patient", rec.Name },
+                { "date", rec.Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) },
+                { "tel", rec.Tel },
+                { "comment", rec.Comment },
+                { "created", rec.Created.ToString(LONGFORMAT, CultureInfo.InvariantCulture) },
+                { "last_modified", DateTime.Now.ToString(LONGFORMAT, CultureInfo.InvariantCulture) },
                 { "_rev", rec.Rev }
             };
             PutReq(CurrentHost + "/" + db + "/" + rec.ID + "/", jsonobj);

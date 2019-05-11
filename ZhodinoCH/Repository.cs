@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using ZhodinoCH.Model;
 
@@ -12,17 +11,25 @@ namespace ZhodinoCH
 {
     public static class Repository
     {
+        public static string CurrentHost { get; set; }
 
-        private static readonly string CURRENT_HOST = GetActiveHost();
+        public static void CheckHost()
+        {
+            if (string.IsNullOrEmpty(CurrentHost))
+            {
+                CurrentHost = GetActiveHost();
+            }
+        }
 
-        private static string GetActiveHost()
+        public static string GetActiveHost()
         {
             var tasks = new List<Task<string>>()
             {
-                Task<string>.Factory.StartNew(() => DownloadString(Properties.Settings.Default.RemoteHost)),
-                Task<string>.Factory.StartNew(() => DownloadString(Properties.Settings.Default.LocalHost))                
+                Task<string>.Factory.StartNew( () => DownloadString(Properties.Settings.Default.RemoteHost)),
+                Task<string>.Factory.StartNew( () => DownloadString(Properties.Settings.Default.LocalHost))
             };
-            var taskIndex = Task.WaitAny(tasks.ToArray());
+            Console.WriteLine("STATIC: " + tasks.Count);
+            var taskIndex = Task<string>.WaitAny(tasks.ToArray());
             switch(taskIndex)
             {
                 case 0:
@@ -36,7 +43,8 @@ namespace ZhodinoCH
 
         public static Record Get(string db, string id)
         {
-            string response = DownloadString(CURRENT_HOST + "/" + db + "/" + id);
+            CheckHost();
+            string response = DownloadString(CurrentHost + "/" + db + "/" + id);
             JObject record = JObject.Parse((response));
             var rec = new Record(
                 (string)record["_id"],
@@ -51,8 +59,9 @@ namespace ZhodinoCH
 
         public static List<Record> GetAll(string db)
         {
+            CheckHost();
             var recs = new List<Record>();
-            string response = DownloadString(CURRENT_HOST + "/" + db + "/_all_docs?include_docs=true");
+            string response = DownloadString(CurrentHost + "/" + db + "/_all_docs?include_docs=true");
             JObject records = JObject.Parse((response));
             JArray rows = (JArray)records["rows"];
             foreach (var row in rows)
@@ -73,9 +82,10 @@ namespace ZhodinoCH
 
         public static async Task<List<Record>> GetAllAsync(string db)
         {
+            CheckHost();
             Console.WriteLine("GetAllAsync(" + db + ")");
             var recs = new List<Record>();
-            string response = await DownloadStringAsync(CURRENT_HOST + "/" + db + "/_all_docs?include_docs=true").ConfigureAwait(false);
+            string response = await DownloadStringAsync(CurrentHost + "/" + db + "/_all_docs?include_docs=true").ConfigureAwait(false);
             Console.WriteLine(response);
             JObject records = JObject.Parse((response));
             JArray rows = (JArray)records["rows"];
@@ -97,8 +107,10 @@ namespace ZhodinoCH
 
         private static string DownloadString(string uri)
         {
+            Console.WriteLine(uri);
             using (WebClient webClient = new WebClient())
             {
+                Console.WriteLine(uri);
                 webClient.Encoding = Encoding.UTF8;
                 webClient.Headers["User-Agent"] = "Mozilla";
                 webClient.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes("editor:111"));
@@ -111,18 +123,20 @@ namespace ZhodinoCH
         {
             using (WebClient webClient = new WebClient())
             {
-                Console.WriteLine(uri);
+                Console.WriteLine("DSA: " + uri);
                 string text = "";
                 webClient.Encoding = Encoding.UTF8;
                 webClient.Headers["User-Agent"] = "Mozilla";
                 webClient.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes("editor:111"));
                 text = await webClient.DownloadStringTaskAsync(new Uri(uri)).ConfigureAwait(false);
+                Console.WriteLine("DSA: " + text);
                 return text;
             }
         }
 
         public static void Insert(string db, Record rec)
         {
+            CheckHost();
             JObject jsonobj = new JObject
             {
                 { "patient", rec.Name },
@@ -130,11 +144,12 @@ namespace ZhodinoCH
                 { "tel", rec.Tel },
                 { "comment", rec.Comment }
             };
-            PutReq(CURRENT_HOST + "/" + db + "/" + rec.ID + "/", jsonobj);
+            PutReq(CurrentHost + "/" + db + "/" + rec.ID + "/", jsonobj);
         }
 
         public static void Update(string db, Record rec)
         {
+            CheckHost();
             JObject jsonobj = new JObject
             {
                 { "patient", rec.Name },
@@ -143,11 +158,12 @@ namespace ZhodinoCH
                 { "comment", rec.Comment },
                 { "_rev", rec.Rev }
             };
-            PutReq(CURRENT_HOST + "/" + db + "/" + rec.ID + "/", jsonobj);
+            PutReq(CurrentHost + "/" + db + "/" + rec.ID + "/", jsonobj);
         }
 
         public static void InsertUser(string user, string password)
         {
+            CheckHost();
             JObject jsonobj = new JObject
             {
                 { "name", user },
@@ -155,12 +171,13 @@ namespace ZhodinoCH
                 { "type", "user" },
                 { "roles", new JArray() }
             };
-            var res = PutReq(CURRENT_HOST + "/_users/org.couchdb.user:" + user, jsonobj);
+            var res = PutReq(CurrentHost + "/_users/org.couchdb.user:" + user, jsonobj);
             Console.WriteLine(res);
         }
 
         public static void InsertSecurity(string db, string user)
         {
+            CheckHost();
             JObject jsonobj = new JObject
             {
                 { "admins", new JObject() },
@@ -173,7 +190,7 @@ namespace ZhodinoCH
                 { "roles", new JArray() }
             }}
             };
-            var res = PutReq(CURRENT_HOST + "/" + db + "/_security", jsonobj);
+            var res = PutReq(CurrentHost + "/" + db + "/_security", jsonobj);
             Console.WriteLine(res);
         }
 

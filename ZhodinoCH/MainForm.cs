@@ -28,10 +28,6 @@ namespace ZhodinoCH
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            for (int i = 0; i < 128; i++)
-            {
-                Console.WriteLine(PushIDGenerator.GeneratePushId());
-            }
             for (int i = 0; i < Settings.Default.DbTitles.Count; i++)
             {
                 var item = new ToolStripButton(Settings.Default.DbTitles[i])

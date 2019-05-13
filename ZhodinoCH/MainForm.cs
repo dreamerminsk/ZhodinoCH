@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZhodinoCH.Model;
 using ZhodinoCH.Properties;
-using ZhodinoCH.Utils;
 
 namespace ZhodinoCH
 {
@@ -15,6 +12,8 @@ namespace ZhodinoCH
     {
 
         private static readonly Random random = new Random();
+
+        private Session session = new Session();
 
         private string currentDb = "";
         //private ConcurrentQueue<string> queue = new ConcurrentQueue<string>();
@@ -41,6 +40,7 @@ namespace ZhodinoCH
             }
             dataGridView1.DataSource = source;
             toolStripLabel1.Text = "[" + NetUtils.LocalIPAddress() + "]";
+            Repository.InsertSession(session);
             toolButtons[0].PerformClick();
         }
 
@@ -49,7 +49,7 @@ namespace ZhodinoCH
             toolStrip1.Enabled = false;
             ToolStripButton toolButton = (ToolStripButton)sender;
             currentDb = toolButton.Tag.ToString();
-            await Downloads().ConfigureAwait(true);            
+            await Downloads().ConfigureAwait(true);
             Text = toolButton.Text + " - " + Settings.Default.Application + " " + Settings.Default.Version;
             toolButton.ToolTipText = toolButton.Text + " (" + source.Count + ")";
             foreach (var item in toolButtons)
@@ -67,7 +67,7 @@ namespace ZhodinoCH
         }
 
         private async Task Downloads()
-        {            
+        {
             try
             {
                 var recs = await Repository.GetAllAsync(currentDb).ConfigureAwait(true);
@@ -78,7 +78,7 @@ namespace ZhodinoCH
                     if (random.Next(0, 100) > 64)
                     {
                         Application.DoEvents();
-                    }                    
+                    }
                 }
             }
             catch (Exception ex)
@@ -92,13 +92,13 @@ namespace ZhodinoCH
         private void DataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             DataGridView dataGridView = (DataGridView)sender;
-            
+
             Console.WriteLine(sender.GetType().Name);
         }
 
         private void DataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            
+
         }
 
         private void DataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)

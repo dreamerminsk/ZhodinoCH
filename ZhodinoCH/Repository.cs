@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ZhodinoCH.Model;
 
@@ -11,6 +12,9 @@ namespace ZhodinoCH
 {
     public static class Repository
     {
+
+        private static readonly Mutex mutex = new Mutex();
+
         private const string LONGFORMAT = "yyyy-MM-ddTHH:mm:ss.fffffffzzz";
 
         public static string CurrentHost { get; set; }
@@ -107,35 +111,6 @@ namespace ZhodinoCH
             return recs;
         }
 
-        private static string DownloadString(string uri)
-        {
-            Console.WriteLine(uri);
-            using (WebClient webClient = new WebClient())
-            {
-                Console.WriteLine(uri);
-                webClient.Encoding = Encoding.UTF8;
-                webClient.Headers["User-Agent"] = "Mozilla";
-                webClient.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes("editor:111"));
-                string response = webClient.DownloadString(new Uri(uri));
-                return response;
-            }
-        }
-
-        private static async Task<string> DownloadStringAsync(string uri)
-        {
-            using (WebClient webClient = new WebClient())
-            {
-                Console.WriteLine("DSA: " + uri);
-                string text = "";
-                webClient.Encoding = Encoding.UTF8;
-                webClient.Headers["User-Agent"] = "Mozilla";
-                webClient.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes("editor:111"));
-                text = await webClient.DownloadStringTaskAsync(new Uri(uri)).ConfigureAwait(false);
-                Console.WriteLine("DSA: " + text);
-                return text;
-            }
-        }
-
         public static void Insert(string db, QueueItem rec)
         {
             CheckHost();
@@ -165,6 +140,19 @@ namespace ZhodinoCH
                 { "_rev", rec.Rev }
             };
             PutReq(CurrentHost + "/" + db + "/" + rec.ID + "/", jsonobj);
+        }
+
+        public static void InsertSession(Session session)
+        {
+            CheckHost();
+            JObject jsonobj = new JObject
+            {
+                { "user", session.User },
+                { "ip", session.IPAddress.ToString() },
+                { "started", session.Started.ToString(LONGFORMAT, CultureInfo.InvariantCulture) }
+            };
+            var res = PutReq(CurrentHost + "/sessions/" + session.ID, jsonobj);
+            Console.WriteLine(res);
         }
 
         public static void InsertUser(string user, string password)
@@ -199,6 +187,37 @@ namespace ZhodinoCH
             var res = PutReq(CurrentHost + "/" + db + "/_security", jsonobj);
             Console.WriteLine(res);
         }
+
+        private static string DownloadString(string uri)
+        {
+            Console.WriteLine(uri);
+            using (WebClient webClient = new WebClient())
+            {
+                Console.WriteLine(uri);
+                webClient.Encoding = Encoding.UTF8;
+                webClient.Headers["User-Agent"] = "Mozilla";
+                webClient.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes("editor:111"));
+                string response = webClient.DownloadString(new Uri(uri));
+                return response;
+            }
+        }
+
+        private static async Task<string> DownloadStringAsync(string uri)
+        {
+            using (WebClient webClient = new WebClient())
+            {
+                Console.WriteLine("DSA: " + uri);
+                string text = "";
+                webClient.Encoding = Encoding.UTF8;
+                webClient.Headers["User-Agent"] = "Mozilla";
+                webClient.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes("editor:111"));
+                text = await webClient.DownloadStringTaskAsync(new Uri(uri)).ConfigureAwait(false);
+                Console.WriteLine("DSA: " + text);
+                return text;
+            }
+        }
+
+        
 
         private static string PutReq(string url, JObject jsonobj)
         {

@@ -43,13 +43,13 @@ namespace ZhodinoCH.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string User {
+        [global::System.Configuration.DefaultSettingValueAttribute("Editor")]
+        public string DefaultUser {
             get {
-                return ((string)(this["User"]));
+                return ((string)(this["DefaultUser"]));
             }
             set {
-                this["User"] = value;
+                this["DefaultUser"] = value;
             }
         }
         
@@ -64,7 +64,7 @@ namespace ZhodinoCH.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("v2019.05.09-alpha")]
+        [global::System.Configuration.DefaultSettingValueAttribute("v2019.05.13-alpha")]
         public string Version {
             get {
                 return ((string)(this["Version"]));

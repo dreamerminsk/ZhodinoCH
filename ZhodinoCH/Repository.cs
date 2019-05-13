@@ -238,5 +238,25 @@ namespace ZhodinoCH
             response.Close();
             return returnString;
         }
+
+        private static string DelReq(string url, JObject jsonobj)
+        {
+            var encoding = Encoding.GetEncoding("utf-8");
+            byte[] arr = encoding.GetBytes(jsonobj.ToString());
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(new Uri(url));
+            request.Method = "DELETE";
+            request.ContentType = "application/json";
+            request.ContentLength = arr.Length;
+            request.KeepAlive = false;
+            request.UserAgent = "Mozilla";
+            request.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes("editor:111")));
+            var dataStream = request.GetRequestStream();
+            dataStream.Write(arr, 0, arr.Length);
+            dataStream.Close();
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            string returnString = response.StatusCode.ToString();
+            response.Close();
+            return returnString;
+        }
     }
 }

@@ -36,7 +36,7 @@ namespace ZhodinoCH
             };
             Console.WriteLine("STATIC: " + tasks.Count);
             var taskIndex = Task<string>.WaitAny(tasks.ToArray());
-            switch(taskIndex)
+            switch (taskIndex)
             {
                 case 0:
                     return Properties.Settings.Default.RemoteHost;
@@ -155,6 +155,13 @@ namespace ZhodinoCH
             Console.WriteLine(res);
         }
 
+        public static void DeleteSession(Session session)
+        {
+            CheckHost();
+            var res = DelReq(CurrentHost + "/sessions/" + session.ID);
+            Console.WriteLine(res);
+        }
+
         public static void InsertUser(string user, string password)
         {
             CheckHost();
@@ -217,7 +224,7 @@ namespace ZhodinoCH
             }
         }
 
-        
+
 
         private static string PutReq(string url, JObject jsonobj)
         {
@@ -239,20 +246,13 @@ namespace ZhodinoCH
             return returnString;
         }
 
-        private static string DelReq(string url, JObject jsonobj)
+        private static string DelReq(string url)
         {
-            var encoding = Encoding.GetEncoding("utf-8");
-            byte[] arr = encoding.GetBytes(jsonobj.ToString());
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(new Uri(url));
             request.Method = "DELETE";
-            request.ContentType = "application/json";
-            request.ContentLength = arr.Length;
             request.KeepAlive = false;
             request.UserAgent = "Mozilla";
             request.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes("editor:111")));
-            var dataStream = request.GetRequestStream();
-            dataStream.Write(arr, 0, arr.Length);
-            dataStream.Close();
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             string returnString = response.StatusCode.ToString();
             response.Close();

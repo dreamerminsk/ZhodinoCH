@@ -162,7 +162,7 @@
     <Compile Include="Utils\PushIDGenerator.cs" />
     <Compile Include="View\Calendar.cs" />
     <Compile Include="Model\Session.cs" />
-    <Compile Include="NetUtils.cs" />
+    <Compile Include="Utils\NetUtils.cs" />
     <Compile Include="Model\QueueItem.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -172,7 +172,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository.cs" />
+    <Compile Include="Source.cs" />
     <Compile Include="Settings.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

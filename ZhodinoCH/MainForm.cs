@@ -40,7 +40,7 @@ namespace ZhodinoCH
             }
             dataGridView1.DataSource = source;
             toolStripLabel1.Text = "[" + NetUtils.LocalIPAddress() + "]";
-            Repository.InsertSession(session);
+            Source.InsertSession(session);
             toolButtons[0].PerformClick();
         }
 
@@ -70,7 +70,7 @@ namespace ZhodinoCH
         {
             try
             {
-                var recs = await Repository.GetAllAsync(currentDb).ConfigureAwait(true);
+                var recs = await Source.GetAllAsync(currentDb).ConfigureAwait(true);
                 source.Clear();
                 foreach (var rec in recs)
                 {
@@ -134,13 +134,13 @@ namespace ZhodinoCH
                 var item = source[e.RowIndex];
                 if (string.IsNullOrEmpty(item.Rev))
                 {
-                    Repository.Insert(currentDb, item);
+                    Source.Insert(currentDb, item);
                 }
                 else
                 {
-                    Repository.Update(currentDb, item);
+                    Source.Update(currentDb, item);
                 }
-                var newItem = Repository.Get(currentDb, item.ID);
+                var newItem = Source.Get(currentDb, item.ID);
                 item.Rev = newItem.Rev;
             }
             catch (Exception)
@@ -151,7 +151,7 @@ namespace ZhodinoCH
         {
             try
             {
-                Repository.DeleteSession(session);
+                Source.DeleteSession(session);
             }
             finally
             {
@@ -160,6 +160,16 @@ namespace ZhodinoCH
         }
 
         private void DataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void ToolStripComboBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
 
         }

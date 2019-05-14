@@ -11,7 +11,7 @@ using ZhodinoCH.Model;
 
 namespace ZhodinoCH
 {
-    public static class Repository
+    public static class Source
     {
 
         private static readonly Mutex mutex = new Mutex();

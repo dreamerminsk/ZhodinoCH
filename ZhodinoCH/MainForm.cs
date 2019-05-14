@@ -149,7 +149,14 @@ namespace ZhodinoCH
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Repository.DeleteSession(session);
+            try
+            {
+                Repository.DeleteSession(session);
+            }
+            finally
+            {
+                e.Cancel = false;
+            }
         }
 
         private void DataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)

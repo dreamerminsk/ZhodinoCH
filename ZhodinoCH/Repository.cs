@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using ZhodinoCH.Model;
 
 namespace ZhodinoCH
@@ -256,6 +257,7 @@ namespace ZhodinoCH
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             string returnString = response.StatusCode.ToString();
             response.Close();
+            MessageBox.Show(returnString);
             return returnString;
         }
     }

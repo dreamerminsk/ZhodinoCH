@@ -44,8 +44,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <DocumentationFile>bin\Debug\ZhodinoCH.xml</DocumentationFile>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <DocumentationFile>
+    </DocumentationFile>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <LangVersion>default</LangVersion>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
@@ -58,8 +59,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <DocumentationFile>bin\Release\ZhodinoCH.xml</DocumentationFile>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <DocumentationFile>
+    </DocumentationFile>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup>

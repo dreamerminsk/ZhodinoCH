@@ -228,7 +228,7 @@ namespace ZhodinoCH
                 Console.WriteLine(uri);
                 webClient.Encoding = Encoding.UTF8;
                 webClient.Headers["User-Agent"] = USER_AGENT;
-                webClient.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes("editor:111"));
+                webClient.Headers["Authorization"] = BasicAuth();
                 string response = webClient.DownloadString(new Uri(uri));
                 return response;
             }
@@ -242,7 +242,7 @@ namespace ZhodinoCH
                 string text = "";
                 webClient.Encoding = Encoding.UTF8;
                 webClient.Headers["User-Agent"] = USER_AGENT;
-                webClient.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes("editor:111"));
+                webClient.Headers["Authorization"] = BasicAuth();
                 text = await webClient.DownloadStringTaskAsync(new Uri(uri)).ConfigureAwait(false);
                 Console.WriteLine("DSA: " + text);
                 return text;
@@ -261,7 +261,7 @@ namespace ZhodinoCH
             request.ContentLength = arr.Length;
             request.KeepAlive = false;
             request.UserAgent = USER_AGENT;
-            request.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes("editor:111")));
+            request.Headers.Add("Authorization", BasicAuth());
             var dataStream = request.GetRequestStream();
             dataStream.Write(arr, 0, arr.Length);
             dataStream.Close();
@@ -277,12 +277,17 @@ namespace ZhodinoCH
             request.Method = "DELETE";
             request.KeepAlive = false;
             request.UserAgent = USER_AGENT;
-            request.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes("editor:111")));
+            request.Headers.Add("Authorization", BasicAuth());
             request.Headers.Add("If-Match", rev);
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             string returnString = response.StatusCode.ToString();
             response.Close();
             return returnString;
+        }
+
+        private static string BasicAuth()
+        {
+            return "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes("editor:111"));
         }
     }
 }

@@ -153,7 +153,16 @@ namespace ZhodinoCH
             rec.Rev = (string)record["_rev"];
             rec.User = (string)record["user"];
             rec.IPAddress = IPAddress.Parse((string)record["ip"]);
-            rec.Started = DateTime.Parse((string)record["started"], CultureInfo.InvariantCulture);
+            try
+            {
+                rec.Started = DateTime.Parse((string)record["started"], CultureInfo.InvariantCulture);
+            }
+            catch (FormatException)
+            {
+                rec.Started = DateTime.Now;
+                //throw;
+            }
+            
             return rec;
         }
 

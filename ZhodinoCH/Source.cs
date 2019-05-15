@@ -16,8 +16,9 @@ namespace ZhodinoCH
 
         private static readonly Mutex mutex = new Mutex();
 
-        private const string LONGFORMAT = "yyyy-MM-ddTHH:mm:ss.fffffff";
+        private const string LONG_FORMAT = "yyyy-MM-ddTHH:mm:ss.fffffff";
         private const string USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; rv:66.0) Gecko/20100101 Firefox/66.0";
+        private const string SHORT_FORMAT = "yyyy-MM-dd";
 
         public static string CurrentHost { get; set; }
 
@@ -119,11 +120,11 @@ namespace ZhodinoCH
             JObject jsonobj = new JObject
             {
                 { "patient", rec.Name },
-                { "date", rec.Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) },
+                { "date", rec.Date.ToString(SHORT_FORMAT, CultureInfo.InvariantCulture) },
                 { "tel", rec.Tel },
                 { "comment", rec.Comment },
-                { "created", rec.Created.ToString(LONGFORMAT, CultureInfo.InvariantCulture) },
-                { "last_modified", rec.LastModified.ToString(LONGFORMAT, CultureInfo.InvariantCulture)}
+                { "created", rec.Created.ToString(LONG_FORMAT, CultureInfo.InvariantCulture) },
+                { "last_modified", rec.LastModified.ToString(LONG_FORMAT, CultureInfo.InvariantCulture)}
             };
             PutReq(CurrentHost + "/" + db + "/" + rec.ID + "/", jsonobj);
         }
@@ -134,11 +135,11 @@ namespace ZhodinoCH
             JObject jsonobj = new JObject
             {
                 { "patient", rec.Name },
-                { "date", rec.Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) },
+                { "date", rec.Date.ToString(SHORT_FORMAT, CultureInfo.InvariantCulture) },
                 { "tel", rec.Tel },
                 { "comment", rec.Comment },
-                { "created", rec.Created.ToString(LONGFORMAT, CultureInfo.InvariantCulture) },
-                { "last_modified", DateTime.Now.ToString(LONGFORMAT, CultureInfo.InvariantCulture) },
+                { "created", rec.Created.ToString(LONG_FORMAT, CultureInfo.InvariantCulture) },
+                { "last_modified", DateTime.Now.ToString(LONG_FORMAT, CultureInfo.InvariantCulture) },
                 { "_rev", rec.Rev }
             };
             PutReq(CurrentHost + "/" + db + "/" + rec.ID + "/", jsonobj);
@@ -174,7 +175,7 @@ namespace ZhodinoCH
             {
                 { "user", session.User },
                 { "ip", session.IPAddress.ToString() },
-                { "started", session.Started.ToString(LONGFORMAT, CultureInfo.InvariantCulture) }
+                { "started", session.Started.ToString(LONG_FORMAT, CultureInfo.InvariantCulture) }
             };
             var res = PutReq(CurrentHost + "/sessions/" + session.ID, jsonobj);
             Console.WriteLine(res);

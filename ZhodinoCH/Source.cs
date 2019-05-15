@@ -16,7 +16,7 @@ namespace ZhodinoCH
 
         private static readonly Mutex mutex = new Mutex();
 
-        private const string LONGFORMAT = "yyyy-MM-ddTHH:mm:ss.fffffffzzz";
+        private const string LONGFORMAT = "yyyy-MM-ddTHH:mm:ss.fffffffZZZ";
 
         public static string CurrentHost { get; set; }
 
@@ -143,6 +143,20 @@ namespace ZhodinoCH
             PutReq(CurrentHost + "/" + db + "/" + rec.ID + "/", jsonobj);
         }
 
+        public static Session GetSession(string id)
+        {
+            CheckHost();
+            string response = DownloadString(CurrentHost + "/sessions/" + id);
+            JObject record = JObject.Parse((response));
+            var rec = new Session();
+            rec.ID = (string)record["_id"];
+            rec.Rev = (string)record["_rev"];
+            rec.User = (string)record["user"];
+            rec.IPAddress = IPAddress.Parse((string)record["ip"]);
+            rec.Started = DateTime.Parse((string)record["started"], CultureInfo.InvariantCulture);
+            return rec;
+        }
+
         public static void InsertSession(Session session)
         {
             CheckHost();
@@ -159,7 +173,7 @@ namespace ZhodinoCH
         public static void DeleteSession(Session session)
         {
             CheckHost();
-            var res = DelReq(CurrentHost + "/sessions/" + session.ID);
+            var res = DelReq(CurrentHost + "/sessions/" + session.ID, session.Rev);
             Console.WriteLine(res);
         }
 
@@ -247,13 +261,14 @@ namespace ZhodinoCH
             return returnString;
         }
 
-        private static string DelReq(string url)
+        private static string DelReq(string url, string rev)
         {
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(new Uri(url));
             request.Method = "DELETE";
             request.KeepAlive = false;
             request.UserAgent = "Mozilla";
             request.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes("editor:111")));
+            request.Headers.Add("If-Match", rev);
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             string returnString = response.StatusCode.ToString();
             response.Close();

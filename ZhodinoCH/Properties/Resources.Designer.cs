@@ -63,9 +63,29 @@ namespace ZhodinoCH.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap _102_512 {
+            get {
+                object obj = ResourceManager.GetObject("102-512", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap _119044 {
             get {
                 object obj = ResourceManager.GetObject("119044", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap _21_512 {
+            get {
+                object obj = ResourceManager.GetObject("21-512", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

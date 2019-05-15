@@ -75,17 +75,15 @@ namespace ZhodinoCH
                 foreach (var rec in recs)
                 {
                     source.Add(rec);
-                    if (random.Next(0, 100) > 64)
+                    if (random.Next(0, 100) > 80)
                     {
                         Application.DoEvents();
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 source.Clear();
-                Console.WriteLine(ex.StackTrace);
-                _ = MessageBox.Show(ex.TargetSite.Name, ex.GetType().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -151,6 +149,7 @@ namespace ZhodinoCH
         {
             try
             {
+                var s = Source.GetSession(session.ID);
                 Source.DeleteSession(session);
             }
             finally

@@ -8,8 +8,9 @@ namespace ZhodinoCH.Model
     {
 
         public string ID { get; set; }
+        public string Rev { get; set; }
         public string User { get; set; }
-        public IPAddress IPAddress { get; private set; }
+        public IPAddress IPAddress { get; set; }
         public DateTime Started { get; set; }
 
         public Session()

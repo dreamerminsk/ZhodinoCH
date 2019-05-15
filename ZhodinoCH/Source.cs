@@ -16,7 +16,7 @@ namespace ZhodinoCH
 
         private static readonly Mutex mutex = new Mutex();
 
-        private const string LONGFORMAT = "yyyy-MM-ddTHH:mm:ss.fffffffZZZ";
+        private const string LONGFORMAT = "yyyy-MM-ddTHH:mm:ss.fffffff";
         private const string USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; rv:66.0) Gecko/20100101 Firefox/66.0";
 
         public static string CurrentHost { get; set; }

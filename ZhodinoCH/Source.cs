@@ -281,7 +281,6 @@ namespace ZhodinoCH
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             string returnString = response.StatusCode.ToString();
             response.Close();
-            MessageBox.Show(returnString);
             return returnString;
         }
     }

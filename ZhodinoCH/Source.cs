@@ -17,6 +17,7 @@ namespace ZhodinoCH
         private static readonly Mutex mutex = new Mutex();
 
         private const string LONGFORMAT = "yyyy-MM-ddTHH:mm:ss.fffffffZZZ";
+        private const string USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; rv:66.0) Gecko/20100101 Firefox/66.0";
 
         public static string CurrentHost { get; set; }
 
@@ -226,7 +227,7 @@ namespace ZhodinoCH
             {
                 Console.WriteLine(uri);
                 webClient.Encoding = Encoding.UTF8;
-                webClient.Headers["User-Agent"] = "Mozilla";
+                webClient.Headers["User-Agent"] = USER_AGENT;
                 webClient.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes("editor:111"));
                 string response = webClient.DownloadString(new Uri(uri));
                 return response;
@@ -240,7 +241,7 @@ namespace ZhodinoCH
                 Console.WriteLine("DSA: " + uri);
                 string text = "";
                 webClient.Encoding = Encoding.UTF8;
-                webClient.Headers["User-Agent"] = "Mozilla";
+                webClient.Headers["User-Agent"] = USER_AGENT;
                 webClient.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes("editor:111"));
                 text = await webClient.DownloadStringTaskAsync(new Uri(uri)).ConfigureAwait(false);
                 Console.WriteLine("DSA: " + text);
@@ -259,7 +260,7 @@ namespace ZhodinoCH
             request.ContentType = "application/json";
             request.ContentLength = arr.Length;
             request.KeepAlive = false;
-            request.UserAgent = "Mozilla";
+            request.UserAgent = USER_AGENT;
             request.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes("editor:111")));
             var dataStream = request.GetRequestStream();
             dataStream.Write(arr, 0, arr.Length);
@@ -275,7 +276,7 @@ namespace ZhodinoCH
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(new Uri(url));
             request.Method = "DELETE";
             request.KeepAlive = false;
-            request.UserAgent = "Mozilla";
+            request.UserAgent = USER_AGENT;
             request.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes("editor:111")));
             request.Headers.Add("If-Match", rev);
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();

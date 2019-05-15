@@ -150,7 +150,7 @@ namespace ZhodinoCH
             try
             {
                 var s = Source.GetSession(session.ID);
-                Source.DeleteSession(session);
+                Source.DeleteSession(s);
             }
             finally
             {

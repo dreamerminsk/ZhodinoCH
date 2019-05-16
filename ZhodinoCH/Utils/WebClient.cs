@@ -22,11 +22,11 @@ namespace ZhodinoCH.Utils
         {
             if (string.IsNullOrEmpty(CurrentHost))
             {
-                CurrentHost = GetActiveHostAsync();
+                CurrentHost = GetActiveHost();
             }
         }
 
-        public static string GetActiveHostAsync()
+        public static string GetActiveHost()
         {
             var taskIndex = Task<string>.WaitAny(
                 new List<Task<string>>()
@@ -45,7 +45,7 @@ namespace ZhodinoCH.Utils
             }
         }
 
-        private static async Task<string> DownloadStringAsync(string uri)
+        public static async Task<string> DownloadStringAsync(string uri)
         {
             HttpRequestMessage request = new HttpRequestMessage();
             request.RequestUri = new Uri(uri);

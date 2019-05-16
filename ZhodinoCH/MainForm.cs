@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZhodinoCH.Model;
 using ZhodinoCH.Properties;
+using ZhodinoCH.Utils;
 
 namespace ZhodinoCH
 {
@@ -25,8 +27,10 @@ namespace ZhodinoCH
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private async void Form1_LoadAsync(object sender, EventArgs e)
         {
+            var str = await WebClient.DownloadStringAsync("http://tut.by").ConfigureAwait(true);
+            MessageBox.Show(str.Length.ToString(CultureInfo.InvariantCulture));
             for (int i = 0; i < Settings.Default.DbTitles.Count; i++)
             {
                 var item = new ToolStripButton(Settings.Default.DbTitles[i])

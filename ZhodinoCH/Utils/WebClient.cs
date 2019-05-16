@@ -5,16 +5,16 @@ using System.Text;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net;
+using Newtonsoft.Json.Linq;
 
 namespace ZhodinoCH.Utils
 {
     public class WebClient
     {
-        private const string SHORT_FORMAT = "yyyy-MM-dd";
-        private const string LONG_FORMAT = "yyyy-MM-ddTHH:mm:ss.fffffff";
+
         private const string USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; rv:66.0) Gecko/20100101 Firefox/66.0";
 
-        private static readonly HttpClient HttpClient;
+        private static readonly HttpClient HttpClient = new HttpClient();
 
         public static string CurrentHost { get; set; }
 
@@ -22,19 +22,18 @@ namespace ZhodinoCH.Utils
         {
             if (string.IsNullOrEmpty(CurrentHost))
             {
-                CurrentHost = GetActiveHost();
+                CurrentHost = GetActiveHostAsync();
             }
         }
 
-        public static string GetActiveHost()
+        public static string GetActiveHostAsync()
         {
-            var tasks = new List<Task<string>>()
+            var taskIndex = Task<string>.WaitAny(
+                new List<Task<string>>()
             {
-                Task<string>.Factory.StartNew(async () => await DownloadStringAsync(Properties.Settings.Default.RemoteHost)),
-                Task<string>.Factory.StartNew(async () => await DownloadStringAsync(Properties.Settings.Default.LocalHost))
-            };
-            Console.WriteLine("STATIC: " + tasks.Count);
-            var taskIndex = Task<string>.WaitAny(tasks.ToArray());
+                DownloadStringAsync(Properties.Settings.Default.RemoteHost),
+                DownloadStringAsync(Properties.Settings.Default.LocalHost)
+            }.ToArray());
             switch (taskIndex)
             {
                 case 0:
@@ -46,28 +45,24 @@ namespace ZhodinoCH.Utils
             }
         }
 
-
-
-
-
-
-
-
-
-
-
         private static async Task<string> DownloadStringAsync(string uri)
         {
-            using (WebClient webClient = new WebClient())
+            HttpRequestMessage request = new HttpRequestMessage();
+            request.RequestUri = new Uri(uri);
+            request.Method = HttpMethod.Get;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("User-Agent", USER_AGENT);
+
+            HttpResponseMessage response = await HttpClient.SendAsync(request).ConfigureAwait(false);
+            if (response.StatusCode == HttpStatusCode.OK)
             {
-                Console.WriteLine("DSA: " + uri);
-                string text = "";
-                webClient.Encoding = Encoding.UTF8;
-                webClient.Headers["User-Agent"] = USER_AGENT;
-                webClient.Headers["Authorization"] = BasicAuth();
-                text = await webClient.DownloadStringTaskAsync(new Uri(uri)).ConfigureAwait(false);
-                Console.WriteLine("DSA: " + text);
-                return text;
+                HttpContent responseContent = response.Content;
+                var json = await responseContent.ReadAsStringAsync().ConfigureAwait(false);
+                return json;
+            }
+            else
+            {
+                throw new Exception("HttpClient Exception: " + response.StatusCode);
             }
         }
 

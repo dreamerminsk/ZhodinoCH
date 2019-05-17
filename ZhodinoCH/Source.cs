@@ -114,7 +114,7 @@ namespace ZhodinoCH
                     recs.Add(rec);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }

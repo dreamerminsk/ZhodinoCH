@@ -50,9 +50,9 @@ namespace ZhodinoCH
             toolStripLabel1.Text = "[" + NetUtils.LocalIPAddress() + "]";
             Source.InsertSession(session);
             toolButtons[0].PerformClick();
-            listBox1.DataSource = users;
-            userTimer = new System.Threading.Timer(async (x) => await LoadUsers().ConfigureAwait(true), null, 0, 10000);
-            await LoadUsers().ConfigureAwait(true);
+            //listBox1.DataSource = users;
+            sessionBindingSource.DataSource = users;
+            userTimer = new System.Threading.Timer(async (x) => await LoadUsers().ConfigureAwait(true), null, 1000, 10000);
             //await LoadDataAsync(@"C:\Users\User\Desktop\Sound\Запись - ФГДС.csv").ConfigureAwait(false);
         }
 
@@ -140,11 +140,12 @@ namespace ZhodinoCH
                 foreach (var rec in recs)
                 {
                     users.Add(rec);
+                    Console.WriteLine("LoadUsers: " + users.Count);
                 }
             }
             catch (Exception)
             {
-                source.Clear();
+                //users.Clear();
             }
         }
 

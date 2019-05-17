@@ -1,7 +1,11 @@
-﻿using System;
+﻿using Csv;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZhodinoCH.Model;
@@ -29,8 +33,6 @@ namespace ZhodinoCH
 
         private async void Form1_LoadAsync(object sender, EventArgs e)
         {
-            var str = await WebClient.DownloadStringAsync("http://tut.by").ConfigureAwait(true);
-            MessageBox.Show(str.Length.ToString(CultureInfo.InvariantCulture));
             for (int i = 0; i < Settings.Default.DbTitles.Count; i++)
             {
                 var item = new ToolStripButton(Settings.Default.DbTitles[i])
@@ -46,6 +48,39 @@ namespace ZhodinoCH
             toolStripLabel1.Text = "[" + NetUtils.LocalIPAddress() + "]";
             Source.InsertSession(session);
             toolButtons[0].PerformClick();
+            //await LoadDataAsync(@"C:\Users\User\Desktop\Sound\Запись - ФГДС.csv").ConfigureAwait(false);
+        }
+
+        private async Task LoadDataAsync(string fileName)
+        {
+            var options = new CsvOptions // Defaults
+            {
+                RowsToSkip = 1, // Allows skipping of initial rows without csv data
+                //SkipRow = (row, idx) => string.IsNullOrEmpty(row) || row[0] == '#',
+                //Separator = '\0', // Autodetects based on first row
+                //TrimData = false, // Can be used to trim each cell
+                //Comparer = null, // Can be used for case-insensitive comparison for names
+                HeaderMode = HeaderMode.HeaderAbsent, // Assumes first row is a header row
+                //ValidateColumnCount = false, // Checks each row immediately for column count
+                //ReturnEmptyForMissingColumn = false, // Allows for accessing invalid column names
+                //Aliases = null, // A collection of alternative column names
+            };
+            var csv = await Task<string>.Factory.StartNew(() => File.ReadAllText(
+                fileName, Encoding.UTF8)).ConfigureAwait(false);
+            foreach (var line in CsvReader.ReadFromText(csv, options))
+            {
+                Console.WriteLine("0: " + DateTime.Parse(line[0], CultureInfo.GetCultureInfoByIetfLanguageTag("ru-RU")));
+                Console.WriteLine("1: " + line[1]);
+                Console.WriteLine("2: " + line[2]);
+                Console.WriteLine("3: " + line[3] + "; " + line[4] + "; ");
+                QueueItem qi = new QueueItem();
+                qi.Date = DateTime.Parse(line[0], CultureInfo.GetCultureInfoByIetfLanguageTag("ru-RU"));
+                qi.Name = line[1];
+                qi.Tel = line[2];
+                qi.Comment = line[3] + "; " + line[4] + "; ";
+                Source.Insert("fgds", qi);
+                Thread.Sleep(1000);
+            }
         }
 
         private async void Item_ClickAsync(object sender, EventArgs e)

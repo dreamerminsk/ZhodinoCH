@@ -242,23 +242,6 @@ namespace ZhodinoCH
             }
         }
 
-        private static async Task<string> DownloadStringAsync(string uri)
-        {
-            using (WebClient webClient = new WebClient())
-            {
-                Console.WriteLine("DSA: " + uri);
-                string text = "";
-                webClient.Encoding = Encoding.UTF8;
-                webClient.Headers["User-Agent"] = USER_AGENT;
-                webClient.Headers["Authorization"] = BasicAuth();
-                text = await webClient.DownloadStringTaskAsync(new Uri(uri)).ConfigureAwait(false);
-                Console.WriteLine("DSA: " + text);
-                return text;
-            }
-        }
-
-
-
         private static string PutReq(string url, JObject jsonobj)
         {
             var encoding = Encoding.GetEncoding("utf-8");

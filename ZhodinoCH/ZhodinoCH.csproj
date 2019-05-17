@@ -102,6 +102,9 @@
     <Reference Include="CouchN, Version=0.2.0.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CouchN.0.2.0.7\lib\net40\CouchN.dll</HintPath>
     </Reference>
+    <Reference Include="Csv, Version=1.0.40.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Csv.1.0.40\lib\net40\Csv.dll</HintPath>
+    </Reference>
     <Reference Include="FSharpCouch, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FSharpCouch.0.2.0.0\lib\FSharpCouch.dll</HintPath>
     </Reference>

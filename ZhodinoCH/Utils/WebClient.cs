@@ -52,6 +52,7 @@ namespace ZhodinoCH.Utils
             request.Method = HttpMethod.Get;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("User-Agent", USER_AGENT);
+            request.Headers.Add("Authorization", BasicAuth());
 
             HttpResponseMessage response = await HttpClient.SendAsync(request).ConfigureAwait(false);
             if (response.StatusCode == HttpStatusCode.OK)

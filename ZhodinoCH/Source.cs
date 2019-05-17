@@ -94,22 +94,29 @@ namespace ZhodinoCH
             CheckHost();
             Console.WriteLine("GetAllAsync(" + db + ")");
             var recs = new List<QueueItem>();
-            string response = await Utils.WebClient.DownloadStringAsync(CurrentHost + "/" + db + "/_all_docs?include_docs=true").ConfigureAwait(false);
-            Console.WriteLine(response);
-            JObject records = JObject.Parse((response));
-            JArray rows = (JArray)records["rows"];
-            foreach (var row in rows)
+            try
             {
-                var doc = row["doc"];
-                var rec = new QueueItem(
-                    (string)doc["_id"],
-                    (string)doc["_rev"],
-                    (string)doc["date"],
-                    (string)doc["patient"],
-                    (string)doc["tel"],
-                    (string)doc["comment"]
-                    );
-                recs.Add(rec);
+                string response = await Utils.WebClient.DownloadStringAsync(CurrentHost + "/" + db + "/_all_docs?include_docs=true").ConfigureAwait(false);
+                Console.WriteLine(response);
+                JObject records = JObject.Parse((response));
+                JArray rows = (JArray)records["rows"];
+                foreach (var row in rows)
+                {
+                    var doc = row["doc"];
+                    var rec = new QueueItem(
+                        (string)doc["_id"],
+                        (string)doc["_rev"],
+                        (string)doc["date"],
+                        (string)doc["patient"],
+                        (string)doc["tel"],
+                        (string)doc["comment"]
+                        );
+                    recs.Add(rec);
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
             return recs;
         }

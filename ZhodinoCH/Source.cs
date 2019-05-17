@@ -152,6 +152,43 @@ namespace ZhodinoCH
             PutReq(CurrentHost + "/" + db + "/" + rec.ID + "/", jsonobj);
         }
 
+        public static async Task<List<Session>> GetAllSessionAsync()
+        {
+            CheckHost();
+            var recs = new List<Session>();
+            try
+            {
+                string response = await Utils.WebClient.DownloadStringAsync(CurrentHost + "/sessions/_all_docs?include_docs=true").ConfigureAwait(false);
+                Console.WriteLine(response);
+                JObject records = JObject.Parse((response));
+                JArray rows = (JArray)records["rows"];
+                foreach (var row in rows)
+                {
+                    var doc = row["doc"];
+                    var rec = new Session();
+                    rec.ID = (string)doc["_id"];
+                    rec.Rev = (string)doc["_rev"];
+                    rec.User = (string)doc["user"];
+                    rec.IPAddress = IPAddress.Parse((string)doc["ip"]);
+                    try
+                    {
+                        rec.Started = DateTime.Parse((string)doc["started"], CultureInfo.InvariantCulture);
+                    }
+                    catch (FormatException)
+                    {
+                        rec.Started = DateTime.Now;
+                        //throw;
+                    }
+                    recs.Add(rec);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return recs;
+        }
+
         public static Session GetSession(string id)
         {
             CheckHost();

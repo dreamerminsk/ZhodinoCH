@@ -25,7 +25,7 @@ namespace ZhodinoCH
         //private ConcurrentQueue<string> queue = new ConcurrentQueue<string>();
         private List<ToolStripButton> toolButtons = new List<ToolStripButton>();
         private readonly BindingList<QueueItem> source = new BindingList<QueueItem>();
-
+        private readonly BindingList<Session> users = new BindingList<Session>();
         public MainForm()
         {
             InitializeComponent();
@@ -48,6 +48,8 @@ namespace ZhodinoCH
             toolStripLabel1.Text = "[" + NetUtils.LocalIPAddress() + "]";
             Source.InsertSession(session);
             toolButtons[0].PerformClick();
+            listBox1.DataSource = users;
+            await LoadUsers().ConfigureAwait(true);
             //await LoadDataAsync(@"C:\Users\User\Desktop\Sound\Запись - ФГДС.csv").ConfigureAwait(false);
         }
 
@@ -118,6 +120,23 @@ namespace ZhodinoCH
                     {
                         Application.DoEvents();
                     }
+                }
+            }
+            catch (Exception)
+            {
+                source.Clear();
+            }
+        }
+
+        private async Task LoadUsers()
+        {
+            try
+            {
+                var recs = await Source.GetAllSessionAsync().ConfigureAwait(true);
+                source.Clear();
+                foreach (var rec in recs)
+                {
+                    users.Add(rec);
                 }
             }
             catch (Exception)
@@ -208,6 +227,11 @@ namespace ZhodinoCH
         }
 
         private void ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SessionBindingSource_CurrentChanged(object sender, EventArgs e)
         {
 
         }

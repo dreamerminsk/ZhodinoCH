@@ -21,5 +21,10 @@ namespace ZhodinoCH.Model
             Started = DateTime.UtcNow;
         }
 
+        public override string ToString()
+        {
+            return "[" + IPAddress.ToString() + "]";
+        }
+
     }
 }

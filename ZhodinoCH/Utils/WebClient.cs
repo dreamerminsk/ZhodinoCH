@@ -6,11 +6,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net;
 using Newtonsoft.Json.Linq;
+using NLog;
 
 namespace ZhodinoCH.Utils
 {
-    public class WebClient
+    public static class WebClient
     {
+
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         private const string USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; rv:66.0) Gecko/20100101 Firefox/66.0";
 
@@ -47,6 +50,7 @@ namespace ZhodinoCH.Utils
 
         public static async Task<string> DownloadStringAsync(string uri)
         {
+            logger.Debug("DownloadStringAsync(" + uri + ")");
             HttpRequestMessage request = new HttpRequestMessage();
             request.RequestUri = new Uri(uri);
             request.Method = HttpMethod.Get;

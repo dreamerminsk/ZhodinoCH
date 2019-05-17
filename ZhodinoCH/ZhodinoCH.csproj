@@ -166,8 +166,8 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Twilio, Version=5.28.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Twilio.5.28.4\lib\net35\Twilio.dll</HintPath>
+    <Reference Include="Twilio, Version=5.29.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Twilio.5.29.0\lib\net35\Twilio.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

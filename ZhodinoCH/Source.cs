@@ -94,7 +94,7 @@ namespace ZhodinoCH
             CheckHost();
             Console.WriteLine("GetAllAsync(" + db + ")");
             var recs = new List<QueueItem>();
-            string response = await DownloadStringAsync(CurrentHost + "/" + db + "/_all_docs?include_docs=true").ConfigureAwait(false);
+            string response = await Utils.WebClient.DownloadStringAsync(CurrentHost + "/" + db + "/_all_docs?include_docs=true").ConfigureAwait(false);
             Console.WriteLine(response);
             JObject records = JObject.Parse((response));
             JArray rows = (JArray)records["rows"];

@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZhodinoCH.Model;
 using ZhodinoCH.Properties;
-using ZhodinoCH.Utils;
 
 namespace ZhodinoCH
 {
@@ -26,6 +25,9 @@ namespace ZhodinoCH
         private List<ToolStripButton> toolButtons = new List<ToolStripButton>();
         private readonly BindingList<QueueItem> source = new BindingList<QueueItem>();
         private readonly BindingList<Session> users = new BindingList<Session>();
+
+        private System.Threading.Timer userTimer;
+
         public MainForm()
         {
             InitializeComponent();
@@ -49,6 +51,7 @@ namespace ZhodinoCH
             Source.InsertSession(session);
             toolButtons[0].PerformClick();
             listBox1.DataSource = users;
+            userTimer = new System.Threading.Timer(async (x) => await LoadUsers().ConfigureAwait(true), null, 0, 10000);
             await LoadUsers().ConfigureAwait(true);
             //await LoadDataAsync(@"C:\Users\User\Desktop\Sound\Запись - ФГДС.csv").ConfigureAwait(false);
         }
@@ -133,7 +136,7 @@ namespace ZhodinoCH
             try
             {
                 var recs = await Source.GetAllSessionAsync().ConfigureAwait(true);
-                source.Clear();
+                users.Clear();
                 foreach (var rec in recs)
                 {
                     users.Add(rec);

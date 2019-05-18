@@ -4,7 +4,7 @@ using ZhodinoCH.Utils;
 
 namespace ZhodinoCH.Model
 {
-    public class Session
+    public class Session : IEquatable<Session>
     {
 
         public string ID { get; set; }
@@ -24,6 +24,25 @@ namespace ZhodinoCH.Model
         public override string ToString()
         {
             return "[" + IPAddress.ToString() + "] - " + (DateTime.Now - Started);
+        }
+
+        public override bool Equals(object other) => Equals(other as Session);
+
+        public bool Equals(Session other)
+        {
+            if (this == other) return true;
+            if (other == null) return false;
+            return string.Equals(ID, other.ID, StringComparison.InvariantCulture);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hash = (int)2166136261;
+                hash = (16777619 * hash) ^ (ID?.GetHashCode() ?? 0);
+                return hash;
+            }
         }
 
     }

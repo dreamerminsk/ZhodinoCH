@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZhodinoCH.Model;
 using ZhodinoCH.Properties;
+using System.Linq;
 
 namespace ZhodinoCH
 {
@@ -27,7 +28,6 @@ namespace ZhodinoCH
         private readonly BindingList<Session> users = new BindingList<Session>();
 
         private System.Threading.Timer userTimer;
-        private System.Threading.Timer refreshListBoxTimer;
             
 
         public MainForm()
@@ -55,11 +55,6 @@ namespace ZhodinoCH
             //listBox1.DataSource = users;
             sessionBindingSource.DataSource = users;
             userTimer = new System.Threading.Timer(async (x) => await LoadUsers().ConfigureAwait(true), null, 1000, 10000);
-            refreshListBoxTimer = new System.Threading.Timer(
-                (x) => { listBox1.Refresh(); },
-                null,
-                TimeSpan.Zero,
-                TimeSpan.FromSeconds(1));
             //await LoadDataAsync(@"C:\Users\User\Desktop\Sound\Запись - ФГДС.csv").ConfigureAwait(false);
         }
 
@@ -143,12 +138,10 @@ namespace ZhodinoCH
             try
             {
                 var recs = await Source.GetAllSessionAsync().ConfigureAwait(true);
-                users.Clear();
-                foreach (var rec in recs)
-                {
-                    users.Add(rec);
-                    Console.WriteLine("LoadUsers: " + users.Count);
-                }
+                IEnumerable<Session> newUsers = recs.Except(users);
+                IEnumerable<Session> oldUsers = users.Except(recs);
+                foreach (var oldUser in oldUsers) { users.Remove(oldUser); }
+                foreach (var newUser in newUsers) { users.Add(newUser); }
             }
             catch (Exception)
             {
@@ -169,26 +162,6 @@ namespace ZhodinoCH
         }
 
         private void DataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-        {
-
-        }
-
-        private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void DataGridView1_CellLeave(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void DataGridView1_RowLeave(object sender, DataGridViewCellEventArgs e)
         {
 
         }
@@ -219,7 +192,6 @@ namespace ZhodinoCH
             try
             {
                 userTimer.Dispose();
-                refreshListBoxTimer.Dispose();
                 var s = Source.GetSession(session.ID);
                 Source.DeleteSession(s);
             }
@@ -229,24 +201,9 @@ namespace ZhodinoCH
             }
         }
 
-        private void DataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        private void Timer1_Tick(object sender, EventArgs e)
         {
-
-        }
-
-        private void ToolStripComboBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void SessionBindingSource_CurrentChanged(object sender, EventArgs e)
-        {
-
+            sessionBindingSource.ResetBindings(false);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace ZhodinoCH.Model
 
         public override string ToString()
         {
-            return "[" + IPAddress.ToString() + "] - " + (DateTime.Now - Started);
+            return "[" + IPAddress.ToString() + "] - " + (DateTime.Now - Started).ToString("c");
         }
 
         public override bool Equals(object other) => Equals(other as Session);

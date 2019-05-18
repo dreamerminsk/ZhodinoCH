@@ -27,6 +27,8 @@ namespace ZhodinoCH
         private readonly BindingList<Session> users = new BindingList<Session>();
 
         private System.Threading.Timer userTimer;
+        private System.Threading.Timer refreshListBoxTimer;
+            
 
         public MainForm()
         {
@@ -53,6 +55,11 @@ namespace ZhodinoCH
             //listBox1.DataSource = users;
             sessionBindingSource.DataSource = users;
             userTimer = new System.Threading.Timer(async (x) => await LoadUsers().ConfigureAwait(true), null, 1000, 10000);
+            refreshListBoxTimer = new System.Threading.Timer(
+                (x) => { listBox1.Refresh(); },
+                null,
+                TimeSpan.Zero,
+                TimeSpan.FromSeconds(1));
             //await LoadDataAsync(@"C:\Users\User\Desktop\Sound\Запись - ФГДС.csv").ConfigureAwait(false);
         }
 
@@ -211,6 +218,8 @@ namespace ZhodinoCH
         {
             try
             {
+                userTimer.Dispose();
+                refreshListBoxTimer.Dispose();
                 var s = Source.GetSession(session.ID);
                 Source.DeleteSession(s);
             }

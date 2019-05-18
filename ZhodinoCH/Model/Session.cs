@@ -18,12 +18,12 @@ namespace ZhodinoCH.Model
             ID = PushIDGenerator.GeneratePushId();
             User = Properties.Settings.Default.DefaultUser;
             IPAddress = NetUtils.LocalIPAddress();
-            Started = DateTime.UtcNow;
+            Started = DateTime.Now;
         }
 
         public override string ToString()
         {
-            return "[" + IPAddress.ToString() + "]";
+            return "[" + IPAddress.ToString() + "] - " + (DateTime.Now - Started);
         }
 
     }

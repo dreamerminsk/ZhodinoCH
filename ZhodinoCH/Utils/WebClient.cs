@@ -50,7 +50,7 @@ namespace ZhodinoCH.Utils
 
         public static async Task<string> DownloadStringAsync(string uri)
         {
-            logger.Debug("DownloadStringAsync(" + uri + ")");
+            logger.Debug("GET " + uri + "");
             HttpRequestMessage request = new HttpRequestMessage();
             request.RequestUri = new Uri(uri);
             request.Method = HttpMethod.Get;
@@ -59,6 +59,7 @@ namespace ZhodinoCH.Utils
             request.Headers.Add("Authorization", BasicAuth());
 
             HttpResponseMessage response = await HttpClient.SendAsync(request).ConfigureAwait(false);
+            logger.Debug(response.ReasonPhrase + " " + uri + "");
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 HttpContent responseContent = response.Content;
@@ -67,6 +68,7 @@ namespace ZhodinoCH.Utils
             }
             else
             {
+                logger.Error("" + response.StatusCode + "");
                 throw new Exception("HttpClient Exception: " + response.StatusCode);
             }
         }

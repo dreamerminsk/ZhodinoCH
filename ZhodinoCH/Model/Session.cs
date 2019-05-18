@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Net;
 using ZhodinoCH.Utils;
 
@@ -23,7 +24,7 @@ namespace ZhodinoCH.Model
 
         public override string ToString()
         {
-            return "[" + IPAddress.ToString() + "] - " + (DateTime.Now - Started).ToString("c");
+            return "[" + IPAddress.ToString() + "] - " + (DateTime.Now - Started).ToString(@"hh\:mm\:ss", CultureInfo.InvariantCulture);
         }
 
         public override bool Equals(object other) => Equals(other as Session);

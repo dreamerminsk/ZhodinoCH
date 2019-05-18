@@ -139,7 +139,7 @@ namespace ZhodinoCH
             // 
             this.splitContainer2.Panel2.Controls.Add(this.listBox1);
             this.splitContainer2.Size = new System.Drawing.Size(1039, 309);
-            this.splitContainer2.SplitterDistance = 789;
+            this.splitContainer2.SplitterDistance = 843;
             this.splitContainer2.TabIndex = 3;
             // 
             // dataGridView1
@@ -180,7 +180,7 @@ namespace ZhodinoCH
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(789, 309);
+            this.dataGridView1.Size = new System.Drawing.Size(843, 309);
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.DataGridView1_CellBeginEdit);
             this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellEndEdit);
@@ -265,7 +265,7 @@ namespace ZhodinoCH
             this.listBox1.ItemHeight = 16;
             this.listBox1.Location = new System.Drawing.Point(0, 0);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(246, 309);
+            this.listBox1.Size = new System.Drawing.Size(192, 309);
             this.listBox1.Sorted = true;
             this.listBox1.TabIndex = 2;
             // 
